@@ -10,6 +10,10 @@ import mt.rcasha.dict.client.DefinitionResponse;
 import mt.rcasha.dict.client.DictClient;
 import mt.rcasha.dict.client.DictException;
 
+/**
+ * @author fernanda
+ *
+ */
 public class Dictionary {
 	
 	private String database;
@@ -25,6 +29,11 @@ public class Dictionary {
 		strategy = properties.getProperty("dictionary.match_strategy");
 	}
 
+	/**
+	 * @return
+	 * @throws DictException
+	 * @throws IOException
+	 */
 	public String getRandomWord() throws DictException, IOException{
 		Map<String,List<String>> matches = dictClient.getMatches(getDatabase(), 
 				getStrategy(), 
@@ -37,14 +46,39 @@ public class Dictionary {
 		return null;
 	}
 	
+	/**
+	 * @param word
+	 * @return
+	 * @throws DictException
+	 * @throws IOException
+	 */
 	public String getDefinition(String word) throws DictException, IOException{
+		String definition = new String();
 		List<DefinitionResponse> definitions = dictClient.getDefinitions(getDatabase(), word);
+		
 		for (DefinitionResponse response : definitions) {
-			
+			if(getDatabase().equals(response.getDatabase())){
+				List<String> lines = response.getLines();
+				for (int i = 1; i < lines.size(); i++) {
+					if(i > 1){
+						definition += "\n";
+					}
+					definition += lines.get(i);
+				}
+			}
 		}
-		return null;
+		
+		if(definition.length() == 0){
+			return null;
+		}
+		
+		return definition;
 	}
 	
+	/**
+	 * @param range
+	 * @return
+	 */
 	private int getRandomInt(int range){
 		Random random = new Random();
 		return random.nextInt(range);
