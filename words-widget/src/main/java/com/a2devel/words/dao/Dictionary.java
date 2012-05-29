@@ -12,6 +12,8 @@ import mt.rcasha.dict.client.DictException;
 import mt.rcasha.dict.client.Status;
 import mt.rcasha.dict.client.StatusException;
 
+import com.a2devel.words.to.Word;
+
 /**
  * @author fernanda
  *
@@ -38,7 +40,7 @@ public class Dictionary {
 	 * @throws DictException
 	 * @throws IOException
 	 */
-	public String getWord() throws DictException, IOException{
+	public Word getWord() throws DictException, IOException{
 		return getWord(0);
 	}
 	
@@ -48,16 +50,22 @@ public class Dictionary {
 	 * @throws DictException
 	 * @throws IOException
 	 */
-	protected String getWord(int currentAttempt) throws DictException, IOException{
+	protected Word getWord(int currentAttempt) throws DictException, IOException{
+		Word wordWrapper = null;
 		String word = this.getRandomWord();
-		if(this.getDefinition(word) == null){
+		String translation = this.getTranslation(word);
+		if(translation == null){
 			if(currentAttempt == Dictionary.ATTEMPTS_NOT_MATCH){
 				return null;
 			}else{
 				getWord(++currentAttempt);
 			}
+		}else{
+			 wordWrapper = new Word();
+			 wordWrapper.setWord(word);
+			 wordWrapper.setTranslation(translation);
 		}
-		return word;
+		return wordWrapper;
 	}
 
 	/**
@@ -103,8 +111,8 @@ public class Dictionary {
 	 * @throws DictException
 	 * @throws IOException
 	 */
-	public String getDefinition(String word) throws IOException, DictException{
-		String definition = new String();
+	public String getTranslation(String word) throws IOException, DictException{
+		String translation = new String();
 		List<DefinitionResponse> definitions = null;
 		
 		try {
@@ -120,18 +128,18 @@ public class Dictionary {
 				List<String> lines = response.getLines();
 				for (int i = 1; i < lines.size(); i++) {
 					if(i > 1){
-						definition += "\n";
+						translation += "\n";
 					}
-					definition += lines.get(i);
+					translation += lines.get(i);
 				}
 			}
 		}
 		
-		if(definition.length() == 0){
+		if(translation.length() == 0){
 			return null;
 		}
 		
-		return definition;
+		return translation;
 	}
 	
 	/**
