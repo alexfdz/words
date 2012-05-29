@@ -30,9 +30,28 @@ public class DictionaryTest {
 	
 	@Test
 	public void testGetDefinition() throws DictException, IOException{
-		String definition = dictionary.getDefinition("coche");
+		String word = dictionary.getRandomWord();
+		Assert.assertNotNull(word);
+		
+		String definition = dictionary.getDefinition(word);
 		Assert.assertNotNull(definition);
 		logger.info("definition : " + definition);
+	}
+	
+	
+	@Test
+	public void testGetWords() throws DictException, IOException{
+		for (int i = 0; i < 10; i++) {
+			String word = dictionary.getWord();
+			String definition = dictionary.getDefinition(word);
+			
+			Assert.assertNotNull(word);
+			Assert.assertNotNull(definition);
+			Assert.assertTrue(word.length() > 0);
+			Assert.assertTrue(definition.length() > 0);
+			
+			logger.info("test #" + i + "\n\tword: "+word + "\n\tdefinition : " + definition);
+		}
 	}
 
 

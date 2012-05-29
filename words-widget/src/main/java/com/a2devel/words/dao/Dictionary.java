@@ -9,12 +9,16 @@ import java.util.Random;
 import mt.rcasha.dict.client.DefinitionResponse;
 import mt.rcasha.dict.client.DictClient;
 import mt.rcasha.dict.client.DictException;
+import mt.rcasha.dict.client.Status;
+import mt.rcasha.dict.client.StatusException;
 
 /**
  * @author fernanda
  *
  */
 public class Dictionary {
+	
+	private static final int ATTEMPTS_NOT_MATCH = 3;
 	
 	private String database;
 	private String strategy;
@@ -28,6 +32,33 @@ public class Dictionary {
 		dictClient = new DictClient(properties.getProperty("dictionary.host"));
 		strategy = properties.getProperty("dictionary.match_strategy");
 	}
+	
+	/**
+	 * @return
+	 * @throws DictException
+	 * @throws IOException
+	 */
+	public String getWord() throws DictException, IOException{
+		return getWord(0);
+	}
+	
+	/**
+	 * @param currentAttempt
+	 * @return
+	 * @throws DictException
+	 * @throws IOException
+	 */
+	protected String getWord(int currentAttempt) throws DictException, IOException{
+		String word = this.getRandomWord();
+		if(this.getDefinition(word) == null){
+			if(currentAttempt == Dictionary.ATTEMPTS_NOT_MATCH){
+				return null;
+			}else{
+				getWord(++currentAttempt);
+			}
+		}
+		return word;
+	}
 
 	/**
 	 * @return
@@ -35,9 +66,29 @@ public class Dictionary {
 	 * @throws IOException
 	 */
 	public String getRandomWord() throws DictException, IOException{
-		Map<String,List<String>> matches = dictClient.getMatches(getDatabase(), 
-				getStrategy(), 
-				String.valueOf((char)(getRandomInt(26) + 'a')));
+		return getRandomWord(0);
+	}
+	
+	/**
+	 * @param currentAttempt
+	 * @return
+	 * @throws DictException
+	 * @throws IOException
+	 */
+	protected String getRandomWord(int currentAttempt) throws DictException, IOException{
+		Map<String,List<String>> matches = null;
+		
+		try {
+			matches = dictClient.getMatches(getDatabase(), getStrategy(), 
+					String.valueOf((char)(getRandomInt(26) + 'a')));
+		} catch (StatusException e) {
+			if(e.getStatus() == Status.ERR_NO_MATCH && 
+					currentAttempt < Dictionary.ATTEMPTS_NOT_MATCH){
+				return getRandomWord(++currentAttempt);
+			}else{
+				throw e;
+			}
+		}
 		
 		if(matches.containsKey(getDatabase())){
 			List<String> results = matches.get(getDatabase());
@@ -52,9 +103,17 @@ public class Dictionary {
 	 * @throws DictException
 	 * @throws IOException
 	 */
-	public String getDefinition(String word) throws DictException, IOException{
+	public String getDefinition(String word) throws IOException, DictException{
 		String definition = new String();
-		List<DefinitionResponse> definitions = dictClient.getDefinitions(getDatabase(), word);
+		List<DefinitionResponse> definitions = null;
+		
+		try {
+			definitions = dictClient.getDefinitions(getDatabase(), word);
+		} catch (StatusException e) {
+			if(e.getStatus() == Status.ERR_NO_MATCH){
+				return null;
+			}
+		}
 		
 		for (DefinitionResponse response : definitions) {
 			if(getDatabase().equals(response.getDatabase())){

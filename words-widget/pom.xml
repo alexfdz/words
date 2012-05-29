@@ -10,7 +10,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<android.sdk.path>/usr/lib/android-sdk</android.sdk.path>
 	</properties>
 
 	<developers>
