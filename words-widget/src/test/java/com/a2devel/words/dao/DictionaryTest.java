@@ -3,13 +3,14 @@ package com.a2devel.words.dao;
 import java.io.IOException;
 
 import junit.framework.Assert;
-
 import mt.rcasha.dict.client.DictException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.a2devel.words.to.Word;
 
 public class DictionaryTest {
 	
@@ -33,7 +34,7 @@ public class DictionaryTest {
 		String word = dictionary.getRandomWord();
 		Assert.assertNotNull(word);
 		
-		String definition = dictionary.getDefinition(word);
+		String definition = dictionary.getTranslation(word);
 		Assert.assertNotNull(definition);
 		logger.info("definition : " + definition);
 	}
@@ -42,8 +43,11 @@ public class DictionaryTest {
 	@Test
 	public void testGetWords() throws DictException, IOException{
 		for (int i = 0; i < 10; i++) {
-			String word = dictionary.getWord();
-			String definition = dictionary.getDefinition(word);
+			Word wordWrapper = dictionary.getWord();
+			Assert.assertNotNull(wordWrapper);
+			
+			String word = wordWrapper.getWord();
+			String definition = wordWrapper.getTranslation();
 			
 			Assert.assertNotNull(word);
 			Assert.assertNotNull(definition);
