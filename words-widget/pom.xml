@@ -27,11 +27,23 @@
 			<artifactId>android</artifactId>
 			<version>2.3.3</version>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javadict</groupId>
 		  	<artifactId>javadict-client</artifactId>
 		  	<version>1.0</version>
+		  	<exclusions>
+		  		<exclusion>
+		  			<artifactId>commons-logging</artifactId>
+		  			<groupId>commons-logging</groupId>
+		  		</exclusion>
+		  	</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
