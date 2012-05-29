@@ -18,9 +18,8 @@
                 android:resource="@xml/widget_word" />
         </receiver>
 
-        <!-- Service to perform web API queries -->
-        <service android:name="com.a2devel.words.widget.WordsWidget$UpdateService" />
-
+        <service android:name="com.a2devel.words.service.UpdateService" />
+        <service android:name="com.a2devel.words.service.SwitchVisibilityService" />
     </application>
 
 </manifest>
