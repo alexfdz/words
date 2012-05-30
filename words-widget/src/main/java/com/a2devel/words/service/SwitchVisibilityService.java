@@ -49,7 +49,11 @@ public class SwitchVisibilityService extends Service {
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, switchIntent,
         	      PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.widget, pendingIntent);
-        
+
+        Intent active = new Intent(context, WordsWidget.class);
+        active.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
+        PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
+        view.setOnClickPendingIntent(R.id.updateButton, actionPendingIntent);
         return view;
     }
 

@@ -42,7 +42,7 @@
         android:visibility="invisible"
         style="@style/Text.WordType" />
     
-    <ImageButton
+    <Button
         android:id="@+id/updateButton"
         android:src="@android:drawable/ic_notification_clear_all"
         android:contentDescription="@string/widget_update_description"

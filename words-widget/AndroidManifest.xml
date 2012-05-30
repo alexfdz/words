@@ -12,7 +12,9 @@
 
         <receiver android:name="com.a2devel.words.widget.WordsWidget" android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />  
+                <action android:name="com.a2devel.words.widget.WordsWidget.ACTION_WIDGET_REFRESH" />
+                <action android:name="com.a2devel.words.widget.WordsWidget.ACTION_WIDGET_SETTINGS" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_word" />
