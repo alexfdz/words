@@ -41,6 +41,13 @@
         android:includeFontPadding="false"
         android:visibility="invisible"
         style="@style/Text.WordType" />
+    
+    <ImageButton
+        android:id="@+id/updateButton"
+        android:src="@android:drawable/ic_notification_clear_all"
+        android:contentDescription="@string/widget_update_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
 </RelativeLayout>
