@@ -10,6 +10,7 @@ import mt.rcasha.dict.client.DefinitionResponse;
 import mt.rcasha.dict.client.DictClient;
 import mt.rcasha.dict.client.DictException;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -24,6 +25,10 @@ public class DictClientTest {
 	@Before
 	public void initDictClient() throws DictException, IOException{
 		client = new DictClient("dict.org");
+	}
+	@After
+	public void closeDictClient() throws DictException, IOException{
+		client.finalize();
 	}
 	
 	@Test

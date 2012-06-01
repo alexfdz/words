@@ -23,24 +23,6 @@ public class DictionaryTest {
 	}
 	
 	@Test
-	public void testGetRandomWord() throws DictException, IOException{
-		String word = dictionary.getRandomWord();
-		Assert.assertNotNull(word);
-		logger.info("random word : " + word);
-	}
-	
-	@Test
-	public void testGetDefinition() throws DictException, IOException{
-		String word = dictionary.getRandomWord();
-		Assert.assertNotNull(word);
-		
-		String definition = dictionary.getTranslation(word);
-		Assert.assertNotNull(definition);
-		logger.info("definition : " + definition);
-	}
-	
-	
-	@Test
 	public void testGetWords() throws DictException, IOException{
 		for (int i = 0; i < 10; i++) {
 			Word wordWrapper = dictionary.getWord();

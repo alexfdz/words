@@ -21,6 +21,7 @@ import com.a2devel.words.to.Word;
 public class Dictionary {
 	
 	private static final int ATTEMPTS_NOT_MATCH = 3;
+	private static Random random = new Random();
 	
 	private String database;
 	private String strategy;
@@ -31,7 +32,6 @@ public class Dictionary {
 		this.database = database;
 		properties = new Properties();
 		properties.load(Dictionary.class.getResourceAsStream("/dictionary.properties"));
-		dictClient = new DictClient(properties.getProperty("dictionary.host"));
 		strategy = properties.getProperty("dictionary.match_strategy");
 	}
 	
@@ -41,7 +41,10 @@ public class Dictionary {
 	 * @throws IOException
 	 */
 	public Word getWord() throws DictException, IOException{
-		return getWord(0);
+		dictClient = new DictClient(properties.getProperty("dictionary.host"));
+		Word word = getWord(0);
+		dictClient.finalize();
+		return word;
 	}
 	
 	/**
@@ -73,7 +76,7 @@ public class Dictionary {
 	 * @throws DictException
 	 * @throws IOException
 	 */
-	public String getRandomWord() throws DictException, IOException{
+	private String getRandomWord() throws DictException, IOException{
 		return getRandomWord(0);
 	}
 	
@@ -85,10 +88,9 @@ public class Dictionary {
 	 */
 	protected String getRandomWord(int currentAttempt) throws DictException, IOException{
 		Map<String,List<String>> matches = null;
-		
 		try {
-			matches = dictClient.getMatches(getDatabase(), getStrategy(), 
-					String.valueOf((char)(getRandomInt(26) + 'a')));
+			String letter = String.valueOf((char)(random.nextInt(26) + 'a'));
+			matches = dictClient.getMatches(getDatabase(), getStrategy(), letter);
 		} catch (StatusException e) {
 			if(e.getStatus() == Status.ERR_NO_MATCH && 
 					currentAttempt < Dictionary.ATTEMPTS_NOT_MATCH){
@@ -100,7 +102,8 @@ public class Dictionary {
 		
 		if(matches.containsKey(getDatabase())){
 			List<String> results = matches.get(getDatabase());
-			return results.get(getRandomInt(results.size()));
+			int item = random.nextInt(results.size());
+			return results.get(item);
 		}
 		return null;
 	}
@@ -111,7 +114,7 @@ public class Dictionary {
 	 * @throws DictException
 	 * @throws IOException
 	 */
-	public String getTranslation(String word) throws IOException, DictException{
+	private String getTranslation(String word) throws IOException, DictException{
 		String translation = new String();
 		List<DefinitionResponse> definitions = null;
 		
@@ -140,15 +143,6 @@ public class Dictionary {
 		}
 		
 		return translation;
-	}
-	
-	/**
-	 * @param range
-	 * @return
-	 */
-	private int getRandomInt(int range){
-		Random random = new Random();
-		return random.nextInt(range);
 	}
 	
 	public String getDatabase() {

@@ -19,7 +19,10 @@ public class SwitchVisibilityService extends WordsService {
     @Override
 	public void onStart(Intent intent, int startId) {
 		Log.d(TAG, "Started SwitchVisibilityService");
-		isWordVisible = intent.getExtras().getBoolean(WORD_VISIBLE_KEY);
+		isWordVisible = false;
+		if(intent.getExtras() != null){
+			isWordVisible = intent.getExtras().getBoolean(WORD_VISIBLE_KEY);
+		}
 		super.onStart(intent, startId);
 	}
 
