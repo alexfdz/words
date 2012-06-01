@@ -1,14 +1,11 @@
 package com.a2devel.words.widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.RemoteViews;
 
-import com.a2devel.words.R;
 import com.a2devel.words.service.UpdateService;
 
 public class WordsWidget extends AppWidgetProvider {
@@ -22,12 +19,7 @@ public class WordsWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
             int[] appWidgetIds) {
     	
-    	RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_word);
-    	Intent active = new Intent(context, WordsWidget.class);
-        active.setAction(ACTION_WIDGET_REFRESH);
-        PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
-        view.setOnClickPendingIntent(R.id.updateButton, actionPendingIntent);
-        
+    	Log.i(TAG, "onUpdate");
         context.startService(new Intent(context, UpdateService.class));
     }
     

@@ -17,7 +17,7 @@
                 <action android:name="com.a2devel.words.widget.WordsWidget.ACTION_WIDGET_SETTINGS" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/widget_word" />
+                android:resource="@xml/widget" />
         </receiver>
 
         <service android:name="com.a2devel.words.service.UpdateService" />
