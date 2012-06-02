@@ -22,14 +22,17 @@ import com.a2devel.words.widget.WordsWidget;
 public class UpdateService extends WordsService {
 
 	private static final String TAG = "SwitchVisibilityService";
-	private List<String> words = new ArrayList<String>();
+	private static final int WORDS_BUFFER_SIZE = 50;
+	
+	private List<String> wordsBuffer = new ArrayList<String>();
 	
     /**
      * @param context
      * @return
      */
     public RemoteViews updateView(Context context) {
-    	Log.d(TAG, "Current instance " +this.toString());
+    	Word word = null;   
+    	CharSequence errorMessage = null;
     	
     	ComponentName widget = new ComponentName(this, WordsWidget.class);
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_word);
@@ -38,7 +41,15 @@ public class UpdateService extends WordsService {
         view.setViewVisibility(R.id.word, View.VISIBLE);
         AppWidgetManager.getInstance(this).updateAppWidget(widget, view);
         
-        Word word = getWord();
+        try {
+			word = getWord();
+		} catch (DictException e) {
+			errorMessage = context.getText(R.string.widget_error_dict);
+			Log.e(TAG, errorMessage.toString(), e);
+		} catch (IOException e) {
+			errorMessage = context.getText(R.string.widget_error_io);
+			Log.e(TAG, errorMessage.toString(), e);
+		}
         
         if (word != null) {
         	Log.d(TAG, "Correct word " +word.getWord() + "::"+word.getTranslation());
@@ -52,11 +63,13 @@ public class UpdateService extends WordsService {
             view.setOnClickPendingIntent(R.id.widget, pendingIntent);
             
         } else {
-            view.setTextViewText(R.id.word, context.getText(R.string.widget_error));
+        	if(errorMessage == null){
+        		errorMessage = context.getText(R.string.widget_error);
+        	}
+            view.setTextViewText(R.id.word, errorMessage);
             view.setTextViewText(R.id.translation, "");
         }
         
-        AppWidgetManager.getInstance(this).updateAppWidget(widget, view);
         return view;
     }
     
@@ -64,19 +77,19 @@ public class UpdateService extends WordsService {
     /**
      * @return
      */
-    private Word getWord(){
-    	Word word = null;
-    	try {
-			word = getDictionary().getWord();
-		} catch (Exception e) {
-			e.printStackTrace(); //TODO log
-			word = null;
-		} 
-    	if(word != null && words.contains(word.getWord())){
-    		word = getWord();
-    	}else{
-    		words.add(word.getWord());
+    private Word getWord() throws DictException, IOException{
+    	Word word = getDictionary().getWord();
+    	if(word != null){
+    		if(wordsBuffer.contains(word.getWord())){
+        		word = getWord();
+        	}else{
+        		wordsBuffer.add(word.getWord());
+        		if(wordsBuffer.size() > WORDS_BUFFER_SIZE){
+        			wordsBuffer.remove(0);
+        		}
+        	}
     	}
+    	
     	return word;
     }
     
