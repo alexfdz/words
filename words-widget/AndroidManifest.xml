@@ -14,11 +14,15 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />  
                 <action android:name="com.a2devel.words.widget.WordsWidget.ACTION_WIDGET_REFRESH" />
-                <action android:name="com.a2devel.words.widget.WordsWidget.ACTION_WIDGET_SETTINGS" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/widget" />
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget" />
         </receiver>
+        
+        <activity android:name="com.a2devel.words.intent.ConfigurationActivity" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />  
+            </intent-filter>
+        </activity>
 
         <service android:name="com.a2devel.words.service.UpdateService" />
         <service android:name="com.a2devel.words.service.SwitchVisibilityService" />

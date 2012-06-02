@@ -6,8 +6,13 @@
     <string name="widget_loading">Loading word\u2026</string>
     <string name="widget_update_description">Update word</string>
     <string name="widget_settings_description">Settings</string>
+    <string name="widget_settings_update">Automatic update</string>
+    <string name="widget_settings_update_description">Automatic update interval</string>
+    <string name="widget_settings_dictionary">Dictionary</string>
+    <string name="widget_settings_dictionary_description">Choose a dictionary</string>
     
     <string name="widget_error">No word found</string>
     <string name="widget_error_io">No word found \n Connection problem</string>
     <string name="widget_error_dict">No word found \n Dictionary problem</string>
+
 </resources>
