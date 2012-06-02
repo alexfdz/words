@@ -36,11 +36,13 @@
     <style name="button" />
     
     <style name="button.update">
-    	<item name="android:background">@drawable/button_update_bg</item>
+    	<item name="android:src">@drawable/button_update_bg</item>
+    	<item name="android:background">@null</item>
     </style>
     
     <style name="button.config">
-    	<item name="android:background">@drawable/button_config_bg</item>
+    	<item name="android:src">@drawable/button_config_bg</item>
+    	<item name="android:background">@null</item>
     </style>
 
 </resources>

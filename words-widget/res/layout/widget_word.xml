@@ -31,7 +31,6 @@
     <RelativeLayout
 	    android:layout_height="wrap_content"
 	    android:layout_width="fill_parent"
-	    android:paddingBottom="5dp"
 		android:layout_alignParentBottom="true">
     
         <ImageButton
@@ -40,6 +39,7 @@
 	        android:layout_height="wrap_content"
 	        android:contentDescription="@string/widget_update_description"
 	        android:layout_alignParentLeft="true"
+	        android:padding="10dp"
 	        style="@style/button.update" />
         
         <ImageButton
@@ -47,6 +47,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:contentDescription="@string/widget_settings_description"
+	        android:padding="10dp"
 	        android:layout_alignParentRight="true"
 	        style="@style/button.config" />
         
