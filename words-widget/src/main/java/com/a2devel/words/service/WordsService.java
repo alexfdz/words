@@ -39,7 +39,7 @@ public abstract class WordsService extends Service {
        
     	Log.d(TAG, "appWidgetId " + widgetId);
     	 
-        Intent active = new Intent(context, UpdateService.class);
+        Intent active = new Intent(context, WordsWidget.class);
         active.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
         active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
