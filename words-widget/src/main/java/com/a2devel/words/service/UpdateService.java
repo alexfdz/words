@@ -7,7 +7,6 @@ import java.util.List;
 import mt.rcasha.dict.client.DictException;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -17,7 +16,6 @@ import android.widget.RemoteViews;
 import com.a2devel.words.R;
 import com.a2devel.words.dao.Dictionary;
 import com.a2devel.words.to.Word;
-import com.a2devel.words.widget.WordsWidget;
 
 public class UpdateService extends WordsService {
 
@@ -30,16 +28,15 @@ public class UpdateService extends WordsService {
      * @param context
      * @return
      */
-    public RemoteViews updateView(Context context) {
+    public RemoteViews updateView(Context context, int widgetId) {
     	Word word = null;   
     	CharSequence errorMessage = null;
     	
-    	ComponentName widget = new ComponentName(this, WordsWidget.class);
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_word);
         view.setTextViewText(R.id.word,context.getText(R.string.widget_loading));
         view.setViewVisibility(R.id.translation, View.INVISIBLE);
         view.setViewVisibility(R.id.word, View.VISIBLE);
-        AppWidgetManager.getInstance(this).updateAppWidget(widget, view);
+        AppWidgetManager.getInstance(context).updateAppWidget(widgetId, view);
         
         try {
 			word = getWord();
@@ -58,6 +55,7 @@ public class UpdateService extends WordsService {
 
             Intent switchIntent = new Intent(context, SwitchVisibilityService.class);
             switchIntent.putExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, true);
+            switchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
             PendingIntent pendingIntent = PendingIntent.getService(context, 0, switchIntent,
             	      PendingIntent.FLAG_UPDATE_CURRENT);
             view.setOnClickPendingIntent(R.id.widget, pendingIntent);

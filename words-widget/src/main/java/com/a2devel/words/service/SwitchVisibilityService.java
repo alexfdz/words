@@ -1,6 +1,7 @@
 package com.a2devel.words.service;
 
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -19,10 +20,7 @@ public class SwitchVisibilityService extends WordsService {
     @Override
 	public void onStart(Intent intent, int startId) {
 		Log.d(TAG, "Started SwitchVisibilityService");
-		isWordVisible = false;
-		if(intent.getExtras() != null){
-			isWordVisible = intent.getExtras().getBoolean(WORD_VISIBLE_KEY);
-		}
+		isWordVisible = intent.getBooleanExtra(WORD_VISIBLE_KEY, false);
 		super.onStart(intent, startId);
 	}
 
@@ -30,7 +28,7 @@ public class SwitchVisibilityService extends WordsService {
      * @param context
      * @return
      */
-    public RemoteViews updateView(Context context) {
+    public RemoteViews updateView(Context context, int widgetId) {
     	Log.d(TAG, "isWordVisible = "+isWordVisible);
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_word);
         if(isWordVisible){
@@ -43,6 +41,7 @@ public class SwitchVisibilityService extends WordsService {
         
         Intent switchIntent = new Intent(context, SwitchVisibilityService.class);
         switchIntent.putExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, !isWordVisible);
+        switchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, switchIntent,
         	      PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.widget, pendingIntent);
