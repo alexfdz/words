@@ -20,6 +20,8 @@ import com.a2devel.words.to.Word;
  */
 public class Dictionary {
 	
+	public static final String DEFAULT_DICTIONARY = "eng-spa";
+	
 	private static final int ATTEMPTS_NOT_MATCH = 3;
 	private static Random random = new Random();
 	

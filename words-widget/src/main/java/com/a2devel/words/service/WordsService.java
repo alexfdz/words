@@ -5,7 +5,6 @@ import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -41,23 +40,25 @@ public abstract class WordsService extends Service {
     	 
         Intent active = new Intent(context, WordsWidget.class);
         active.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
-        active.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        WordsWidget.addIntentData(active, widgetId);
         PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
         view.setOnClickPendingIntent(R.id.updateButton, actionPendingIntent);
         
+        Log.d(TAG, "updated updatebutton to  widgetId: " + widgetId);
+        
         Intent settingIntent = new Intent(context, ConfigurationActivity.class);
 		settingIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
-		settingIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-		settingIntent.setData(Uri.parse(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE
-						+ widgetId));
+		WordsWidget.addIntentData(settingIntent, widgetId);
 		PendingIntent pendingIntentSettings = PendingIntent.getActivity(
 				context, 0, settingIntent, 0);
 
 		view.setOnClickPendingIntent(R.id.settingsButton, pendingIntentSettings);
 		
+		Log.d(TAG, "updated settingsButton to  widgetId: " + widgetId);
+		
 		AppWidgetManager.getInstance(context).updateAppWidget(widgetId, view);
 		
-        Log.d(TAG, "Updated common elements");
+        Log.d(TAG, "Updated common elements widgetId: " + widgetId);
         
         return view;
     }

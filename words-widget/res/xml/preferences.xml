@@ -5,15 +5,15 @@
       <ListPreference
            android:title="@string/widget_settings_dictionary"
            android:summary="@string/widget_settings_dictionary_description"
-           android:key="dictionaryList"
-           android:defaultValue="1"
+           android:key="@string/pref_dictionary_key"
+           android:defaultValue="eng-spa"
            android:entries="@array/dictionaries"
            android:entryValues="@array/dictionaries_values" />       
       
       <ListPreference
            android:title="@string/widget_settings_update"
            android:summary="@string/widget_settings_update_description"
-           android:key="updateList"
+           android:key="@string/pref_updateTime_key"
            android:defaultValue="1"
            android:entries="@array/updateTimes"
            android:entryValues="@array/updateTimes_values" />  

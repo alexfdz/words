@@ -9,13 +9,16 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.a2devel.words.R;
 import com.a2devel.words.dao.Dictionary;
+import com.a2devel.words.intent.ConfigurationActivity;
 import com.a2devel.words.to.Word;
+import com.a2devel.words.widget.WordsWidget;
 
 public class UpdateService extends WordsService {
 
@@ -32,14 +35,18 @@ public class UpdateService extends WordsService {
     	Word word = null;   
     	CharSequence errorMessage = null;
     	
+    	Log.d(TAG, "Started UpdateService widgetId:"+widgetId);
+    	
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_word);
         view.setTextViewText(R.id.word,context.getText(R.string.widget_loading));
         view.setViewVisibility(R.id.translation, View.INVISIBLE);
         view.setViewVisibility(R.id.word, View.VISIBLE);
         AppWidgetManager.getInstance(context).updateAppWidget(widgetId, view);
         
+        Log.d(TAG, "updated textview widgetId: " + widgetId);
+        
         try {
-			word = getWord();
+			word = getWord(context, widgetId);
 		} catch (DictException e) {
 			errorMessage = context.getText(R.string.widget_error_dict);
 			Log.e(TAG, errorMessage.toString(), e);
@@ -55,7 +62,7 @@ public class UpdateService extends WordsService {
 
             Intent switchIntent = new Intent(context, SwitchVisibilityService.class);
             switchIntent.putExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, true);
-            switchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+            WordsWidget.addIntentData(switchIntent, widgetId);
             PendingIntent pendingIntent = PendingIntent.getService(context, 0, switchIntent,
             	      PendingIntent.FLAG_UPDATE_CURRENT);
             view.setOnClickPendingIntent(R.id.widget, pendingIntent);
@@ -75,11 +82,18 @@ public class UpdateService extends WordsService {
     /**
      * @return
      */
-    private Word getWord() throws DictException, IOException{
-    	Word word = getDictionary().getWord();
+    private Word getWord(Context context, int widgetId) throws DictException, IOException{
+    	SharedPreferences preferences = context.getSharedPreferences(ConfigurationActivity.getPreferencesName(widgetId), Context.MODE_PRIVATE);
+    	return getWord(preferences.getString(context.getText(R.string.pref_dictionary_key).toString(),
+    			Dictionary.DEFAULT_DICTIONARY));
+    }
+    
+    private Word getWord(String database) throws DictException, IOException{
+    	Log.d(TAG, "getWord database: " + database);
+    	Word word = getDictionary(database).getWord();
     	if(word != null){
     		if(wordsBuffer.contains(word.getWord())){
-        		word = getWord();
+        		word = getWord(database);
         	}else{
         		wordsBuffer.add(word.getWord());
         		if(wordsBuffer.size() > WORDS_BUFFER_SIZE){
@@ -94,11 +108,10 @@ public class UpdateService extends WordsService {
     /**
      * @return
      */
-    private Dictionary getDictionary(){
+    private Dictionary getDictionary(String database){
     	Dictionary dictionary = null;
-    	
     	try {
- 			dictionary = new Dictionary("eng-spa");
+ 			dictionary = new Dictionary(database);
  		} catch (IOException e) {
  			Log.e(TAG, e.getMessage(), e); 			
  		} catch (DictException e) {

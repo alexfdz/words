@@ -4,19 +4,22 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
 import com.a2devel.words.R;
+import com.a2devel.words.service.UpdateService;
+import com.a2devel.words.widget.WordsWidget;
 
 public class ConfigurationActivity extends PreferenceActivity {
-    static final String TAG = "ConfigurationActivity";
-
-    private static final String PREFS_NAME = "com.a2devel.words.WordsWidget";
-    private static final String PREF_PREFIX_KEY = "prefix_";
-
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    EditText mAppWidgetPrefix;
+    
+	public static final String DICTIONARY_KEY = "dictionaryList";
+	public static final String UPDATETIME_KEY = "updateList";
+	
+	protected static final String TAG = "ConfigurationActivity";
+    private static final String PREFS_NAME = WordsWidget.class.getSimpleName();
+    private int widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     public ConfigurationActivity() {
         super();
@@ -27,30 +30,47 @@ public class ConfigurationActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         
         setResult(RESULT_CANCELED);
+        
+        // Find the widget id from the intent. 
+        Intent intent = getIntent();
+        widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 
+        		AppWidgetManager.INVALID_APPWIDGET_ID);
+        
+        Log.d(TAG, "ConfigurationActivity appWidgetId:" +widgetId);
+        
+        // If they gave us an intent without the widget id, just bail.
+        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+        }
+
+        PreferenceManager localPrefs = getPreferenceManager();
+        localPrefs.setSharedPreferencesName(ConfigurationActivity.getPreferencesName(widgetId));
         addPreferencesFromResource(R.xml.preferences);
         setContentView(R.layout.configuration);
         
         // Bind the action for the save button.
         findViewById(R.id.save_button).setOnClickListener(mOnClickListener);
         		
-        // Find the widget id from the intent. 
-        Intent intent = getIntent();
-        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 
-        		AppWidgetManager.INVALID_APPWIDGET_ID);
-        // If they gave us an intent without the widget id, just bail.
-        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-            finish();
-        }
-
+    }
+    
+    @Override
+    public void onBackPressed() {
+        Intent updateIntent = new Intent(this, UpdateService.class);
+		WordsWidget.addIntentData(updateIntent, widgetId);
+        this.startService(updateIntent);
+        setResult(RESULT_OK, updateIntent);
+        finish();
     }
     
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-            setResult(RESULT_OK, resultValue);
-            finish();
+        	onBackPressed();
         }
     };
+
+    
+    public static String getPreferencesName(int widgetId){
+    	return PREFS_NAME + widgetId;
+    }
 
 }

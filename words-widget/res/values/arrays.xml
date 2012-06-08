@@ -1,23 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="dictionaries">
-        <item>red</item>
-        <item>orange</item>
-        <item>yellow</item>
-        <item>green</item>
-        <item>blue</item>
-        <item>violet</item>
+        <item>Afrikaans-German</item>
+        <item>Arabic-English</item>
+        <item>Croatian-English</item>
+        <item>Czech-English</item>
+        <item>Danish-English</item>
+        <item>Dutch-English</item>
+        <item>Dutch-French</item>
+        <item>Dutch-German</item>
+        <item>English-Arabic</item>
+        <item>English-Croatian</item>
+        <item>English-Czech</item>
+        <item>English-Dutch</item>
+        <item>English-French</item>
+        <item>English-German</item>
+        <item>English-Hindi</item>
+        <item>English-Hungarian</item>
+        <item>English-Irish</item>
+        <item>English-Italian</item>
+        <item>English-Latin</item>
+        <item>English-Portuguese</item>
+        <item>English-Romanian</item>
+        <item>English-Russian</item>
+        <item>English-Serbo-Croat</item>
+        <item>English-Spanish</item>
+        <item>English-Swahili</item>
+        <item>English-Swedish</item>
+        <item>English-Turkish</item>
+        <item>English-Welsh</item>
+        <item>French-Dutch</item>
+        <item>French-English</item>
+        <item>French-German</item>
+        <item>German-Dutch</item>
+        <item>German-English</item>
+        <item>German-French</item>
+        <item>German-Italian</item>
+        <item>German-Portuguese</item>
+        <item>Hindi-English</item>
+        <item>Hungarian-English</item>
+        <item>Irish-English</item>
+        <item>Italian-English</item>
+        <item>Italian-German</item>
+        <item>Japanese-German</item>
+        <item>Latin-English</item>
+        <item>Latin-German</item>
+        <item>Portuguese-English</item>
+        <item>Portuguese-German</item>
+        <item>Scottish Gaelic-German</item>
+        <item>Serbo-Croat-English</item>
+        <item>Slovak-English</item>
+        <item>Spanish-English</item>
+        <item>Swahili-English</item>
+        <item>Swedish-English</item>
+        <item>Turkish-English</item>
+        <item>Turkish-German</item>
+        <item>Welsh-English</item>
     </string-array>
-    
     <string-array name="dictionaries_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
+        <item>afr-deu</item>
+        <item>ara-eng</item>
+        <item>cro-eng</item>
+        <item>cze-eng</item>
+        <item>dan-eng</item>
+        <item>nld-eng</item>
+        <item>nld-fra</item>
+        <item>nld-deu</item>
+        <item>eng-ara</item>
+        <item>eng-cro</item>
+        <item>eng-cze</item>
+        <item>eng-nld</item>
+        <item>eng-fra</item>
+        <item>eng-deu</item>
+        <item>eng-hin</item>
+        <item>eng-hun</item>
+        <item>eng-iri</item>
+        <item>eng-ita</item>
+        <item>eng-lat</item>
+        <item>eng-por</item>
+        <item>eng-rom</item>
+        <item>eng-rus</item>
+        <item>eng-scr</item>
+        <item>eng-spa</item>
+        <item>eng-swa</item>
+        <item>eng-swe</item>
+        <item>eng-tur</item>
+        <item>tur-eng</item>
+        <item>eng-wel</item>
+        <item>fra-nld</item>
+        <item>fra-eng</item>
+        <item>fra-deu</item>
+        <item>deu-nld</item>
+        <item>deu-eng</item>
+        <item>deu-fra</item>
+        <item>deu-ita</item>
+        <item>deu-por</item>
+        <item>hin-eng</item>
+        <item>hun-eng</item>
+        <item>iri-eng</item>
+        <item>ita-eng</item>
+        <item>ita-deu</item>
+        <item>jpn-deu</item>
+        <item>lat-eng</item>
+        <item>lat-deu</item>
+        <item>por-eng</item>
+        <item>por-deu</item>
+        <item>gla-deu</item>
+        <item>scr-eng</item>
+        <item>slo-eng</item>
+        <item>spa-eng</item>
+        <item>swa-eng</item>
+        <item>swe-eng</item>
+        <item>tur-deu</item>
+        <item>wel-eng</item>
     </string-array>
-    
     <string-array name="updateTimes">
         <item>red</item>
         <item>orange</item>
@@ -26,7 +123,6 @@
         <item>blue</item>
         <item>violet</item>
     </string-array>
-    
     <string-array name="updateTimes_values">
         <item>1</item>
         <item>2</item>
@@ -35,5 +131,5 @@
         <item>5</item>
         <item>6</item>
     </string-array>
-    
+
 </resources>

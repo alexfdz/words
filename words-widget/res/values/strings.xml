@@ -2,6 +2,9 @@
 
 <resources>
     <string name="app_name">Words</string>
+    
+    <string name="pref_dictionary_key">dictionary</string>
+    <string name="pref_updateTime_key">updateTime</string>
 
     <string name="widget_loading">Loading word\u2026</string>
     <string name="widget_update_description">Update word</string>
