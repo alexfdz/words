@@ -13,6 +13,7 @@
     <string name="widget_settings_update_description">Automatic update interval</string>
     <string name="widget_settings_dictionary">Dictionary</string>
     <string name="widget_settings_dictionary_description">Choose a dictionary</string>
+    <string name="widget_settings_save">Save</string>
     
     <string name="widget_error">No word found</string>
     <string name="widget_error_io">No word found \n Connection problem</string>
