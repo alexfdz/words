@@ -1,6 +1,9 @@
 package com.a2devel.words.intent;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -9,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.a2devel.words.R;
-import com.a2devel.words.service.UpdateService;
 import com.a2devel.words.widget.WordsWidget;
 
 public class ConfigurationActivity extends PreferenceActivity {
@@ -20,6 +22,11 @@ public class ConfigurationActivity extends PreferenceActivity {
 	protected static final String TAG = "ConfigurationActivity";
     private static final String PREFS_NAME = WordsWidget.class.getSimpleName();
     private int widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    
+    
+    
+    
+    
 
     public ConfigurationActivity() {
         super();
@@ -55,10 +62,16 @@ public class ConfigurationActivity extends PreferenceActivity {
     
     @Override
     public void onBackPressed() {
-        Intent updateIntent = new Intent(this, UpdateService.class);
-		WordsWidget.addIntentData(updateIntent, widgetId);
-        this.startService(updateIntent);
-        setResult(RESULT_OK, updateIntent);
+    	Intent active = new Intent(this, WordsWidget.class);
+        active.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
+        WordsWidget.addIntentData(active, widgetId);
+        PendingIntent actionPendingIntent = PendingIntent.getBroadcast(this, 0, active, 0);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(10*1000),
+    			(long)10000,  actionPendingIntent);
+    	Log.d(TAG, "Alarm refreshed:" +widgetId);
+        this.startService(active);
+        setResult(RESULT_OK, active);
         finish();
     }
     
