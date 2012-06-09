@@ -8,6 +8,7 @@ import java.util.Random;
 
 import mt.rcasha.dict.client.DefinitionResponse;
 import mt.rcasha.dict.client.DictClient;
+import mt.rcasha.dict.client.DictError;
 import mt.rcasha.dict.client.DictException;
 import mt.rcasha.dict.client.Status;
 import mt.rcasha.dict.client.StatusException;
@@ -30,11 +31,11 @@ public class Dictionary {
 	private DictClient dictClient;
 	private Properties properties;
 
-	public Dictionary(String database) throws IOException, DictException{
-		this.database = database;
+	public Dictionary() throws IOException, DictException{
 		properties = new Properties();
 		properties.load(Dictionary.class.getResourceAsStream("/dictionary.properties"));
 		strategy = properties.getProperty("dictionary.match_strategy");
+		dictClient = new DictClient(properties.getProperty("dictionary.host"));
 	}
 	
 	/**
@@ -42,10 +43,14 @@ public class Dictionary {
 	 * @throws DictException
 	 * @throws IOException
 	 */
-	public Word getWord() throws DictException, IOException{
-		dictClient = new DictClient(properties.getProperty("dictionary.host"));
+	public Word getWord(String database) throws DictException, IOException{
+		try {
+			dictClient.check();
+		} catch (DictError e) {
+			dictClient.init();
+		}
+		setDatabase(database);
 		Word word = getWord(0);
-		dictClient.finalize();
 		return word;
 	}
 	
@@ -145,6 +150,10 @@ public class Dictionary {
 		}
 		
 		return translation;
+	}
+	
+	public void finalize() throws DictException, IOException{
+		this.dictClient.finalize();
 	}
 	
 	public String getDatabase() {

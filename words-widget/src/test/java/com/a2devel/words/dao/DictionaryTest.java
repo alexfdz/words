@@ -5,6 +5,7 @@ import java.io.IOException;
 import junit.framework.Assert;
 import mt.rcasha.dict.client.DictException;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -19,13 +20,13 @@ public class DictionaryTest {
 	
 	@Before
 	public void initDictClient() throws DictException, IOException{
-		dictionary = new Dictionary("spa-eng");
+		dictionary = new Dictionary();
 	}
 	
 	@Test
 	public void testGetWords() throws DictException, IOException{
 		for (int i = 0; i < 10; i++) {
-			Word wordWrapper = dictionary.getWord();
+			Word wordWrapper = dictionary.getWord("spa-eng");
 			Assert.assertNotNull(wordWrapper);
 			
 			String word = wordWrapper.getWord();
@@ -40,5 +41,9 @@ public class DictionaryTest {
 		}
 	}
 
+	@After
+	public void destroyDictClient() throws DictException, IOException{
+		dictionary.finalize();
+	}
 
 }

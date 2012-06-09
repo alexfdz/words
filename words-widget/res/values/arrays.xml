@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string-array name="dictionaries">
         <item>Afrikaans-German</item>
         <item>Arabic-English</item>
@@ -58,7 +57,7 @@
         <item>Turkish-German</item>
         <item>Welsh-English</item>
     </string-array>
-    <string-array name="dictionaries_values">
+     <string-array name="dictionaries_values">
         <item>afr-deu</item>
         <item>ara-eng</item>
         <item>cro-eng</item>
@@ -86,7 +85,6 @@
         <item>eng-swa</item>
         <item>eng-swe</item>
         <item>eng-tur</item>
-        <item>tur-eng</item>
         <item>eng-wel</item>
         <item>fra-nld</item>
         <item>fra-eng</item>
@@ -112,9 +110,11 @@
         <item>spa-eng</item>
         <item>swa-eng</item>
         <item>swe-eng</item>
+		<item>tur-eng</item>
         <item>tur-deu</item>
         <item>wel-eng</item>
     </string-array>
+    
     <string-array name="updateTimes">
         <item>red</item>
         <item>orange</item>

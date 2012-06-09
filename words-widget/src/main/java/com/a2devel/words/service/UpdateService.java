@@ -22,10 +22,26 @@ import com.a2devel.words.widget.WordsWidget;
 
 public class UpdateService extends WordsService {
 
-	private static final String TAG = "SwitchVisibilityService";
+	private static final String TAG = "UpdateService";
 	private static final int WORDS_BUFFER_SIZE = 50;
 	
-	private List<String> wordsBuffer = new ArrayList<String>();
+	private List<String> wordsBuffer;
+	private Dictionary dictionary;
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		wordsBuffer = new ArrayList<String>();
+		try {
+			long time = System.currentTimeMillis();
+			dictionary = new Dictionary();
+			Log.d(TAG, "Time to create Dictionary: "+ (System.currentTimeMillis() - time) + " ms");
+		} catch (DictException e) {
+			Log.e(TAG, e.getMessage(), e);
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage(), e);
+		}
+	}
 	
     /**
      * @param context
@@ -90,7 +106,7 @@ public class UpdateService extends WordsService {
     
     private Word getWord(String database) throws DictException, IOException{
     	Log.d(TAG, "getWord database: " + database);
-    	Word word = getDictionary(database).getWord();
+    	Word word = getDictionary().getWord(database);
     	if(word != null){
     		if(wordsBuffer.contains(word.getWord())){
         		word = getWord(database);
@@ -108,17 +124,20 @@ public class UpdateService extends WordsService {
     /**
      * @return
      */
-    private Dictionary getDictionary(String database){
-    	Dictionary dictionary = null;
-    	try {
- 			dictionary = new Dictionary(database);
- 		} catch (IOException e) {
- 			Log.e(TAG, e.getMessage(), e); 			
- 		} catch (DictException e) {
- 			Log.e(TAG, e.getMessage(), e);
- 		}
-    	 
+    private Dictionary getDictionary(){
     	return dictionary;
     }
+
+	@Override
+	public void onDestroy() {
+		try {
+			getDictionary().finalize();
+		} catch (DictException e) {
+			Log.e(TAG, e.getMessage(), e);
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage(), e);
+		}
+		super.onDestroy();
+	}
 
 }

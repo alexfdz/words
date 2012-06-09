@@ -19,13 +19,15 @@ public abstract class WordsService extends Service {
 	
     @Override
     public void onStart(Intent intent, int startId) {
-    	int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 
-        		AppWidgetManager.INVALID_APPWIDGET_ID);
-        
-    	if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-        	RemoteViews view = updateView(this, widgetId);
-            updateCommonElements(this, widgetId, view);
-        }
+    	if(intent != null){
+    		int widgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 
+            		AppWidgetManager.INVALID_APPWIDGET_ID);
+            
+        	if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
+            	RemoteViews view = updateView(this, widgetId);
+                updateCommonElements(this, widgetId, view);
+            }
+    	}
     }
 
     public abstract RemoteViews updateView(Context context, int widgetId);
