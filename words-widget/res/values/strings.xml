@@ -19,5 +19,9 @@
     <string name="widget_error">No word found</string>
     <string name="widget_error_io">No word found \n Connection problem</string>
     <string name="widget_error_dict">No word found \n Dictionary problem</string>
-
+    
+    <string name="speech_lang_notsupported">Language not supported</string>
+    <string name="speech_initialized">Speech service initialized</string>
+    <string name="speech_starting">Starting speech service</string>
+	<string name="speech_error">Speech service error</string>
 </resources>

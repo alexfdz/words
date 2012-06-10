@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.a2devel.words.R;
 import com.a2devel.words.to.Word;
 
 /**
+ * TODO: Pasarlo a Activity
  * @author alex
  *
  */
@@ -31,6 +35,8 @@ public class SpeechService extends Service {
 			public void onInit(int status) {
 				ready = true;
 				Log.d(TAG, "TextToSpeech init");
+				Toast.makeText(SpeechService.this, SpeechService.this.getText(R.string.speech_initialized),
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -45,6 +51,9 @@ public class SpeechService extends Service {
     			word = (Word)intent.getSerializableExtra(SpeechService.WORD_KEY);
     		}
     		this.speech(word, isWordVisible);
+    	}else{
+    		Toast.makeText(this, this.getText(R.string.speech_starting),
+					Toast.LENGTH_SHORT).show();
     	}
     }
     
@@ -67,7 +76,12 @@ public class SpeechService extends Service {
 					speech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
 				}else{
 					Log.d(TAG, "Lang: "+language+" not supported.");
+					Toast.makeText(this, this.getText(R.string.speech_lang_notsupported),
+							Toast.LENGTH_SHORT).show();
 				}
+			}else{
+				Toast.makeText(this, this.getText(R.string.speech_error),
+						Toast.LENGTH_SHORT).show();
 			}
 		}
     }
@@ -106,7 +120,7 @@ public class SpeechService extends Service {
     	}
     	return language;
     }
-
+    
 
     @Override
     public IBinder onBind(Intent intent) {
