@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Words</string>
+    
+    <string name="widget_loading">Cargando palabra\u2026</string>
+    <string name="widget_update_description">Actualizar palabra</string>
+    <string name="widget_speech_description">Servicio de lectura</string>
+    <string name="widget_settings_description">Opciones</string>
+    <string name="widget_settings_update">Actualitzación automática</string>
+    <string name="widget_settings_update_description">Actualitzación automática</string>
+    <string name="widget_settings_dictionary">Diccionario</string>
+    <string name="widget_settings_dictionary_description">Selecciona un diccionario</string>
+    <string name="widget_settings_save">Desar</string>
+    
+    <string name="widget_error">Ninguna palabra encontrada</string>
+    <string name="widget_error_io">CNinguna palabra encontrada \n Problema de connexión</string>
+    <string name="widget_error_dict">Ninguna palabra encontrada \n Problema con el diccionario</string>
+    
+    <string name="speech_lang_notsupported">Lenguaje no sportado</string>
+    <string name="speech_initialized">Servicio de lectura inicializado</string>
+    <string name="speech_starting">Iniciando servicio de lectura</string>
+	<string name="speech_error">Error en el servicio de lectura</string>
+</resources>

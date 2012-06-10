@@ -40,7 +40,6 @@
         <item>Irish-English</item>
         <item>Italian-English</item>
         <item>Italian-German</item>
-        <item>Japanese-German</item>
         <item>Latin-English</item>
         <item>Latin-German</item>
         <item>Portuguese-English</item>
@@ -55,6 +54,7 @@
         <item>Turkish-German</item>
         <item>Welsh-English</item>
     </string-array>
+    
      <string-array name="dictionaries_values">
         <item>afr-deu</item>
         <item>cro-eng</item>
@@ -95,7 +95,6 @@
         <item>iri-eng</item>
         <item>ita-eng</item>
         <item>ita-deu</item>
-        <item>jpn-deu</item>
         <item>lat-eng</item>
         <item>lat-deu</item>
         <item>por-eng</item>

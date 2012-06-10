@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Words</string>
+    
+    <string name="widget_loading">Carregant paraula\u2026</string>
+    <string name="widget_update_description">Actualitzar paraula</string>
+    <string name="widget_speech_description">Parlar</string>
+    <string name="widget_settings_description">Opcions</string>
+    <string name="widget_settings_update">Actualització automàtica</string>
+    <string name="widget_settings_update_description">Actualització automàtica</string>
+    <string name="widget_settings_dictionary">Diccionari</string>
+    <string name="widget_settings_dictionary_description">Escull un diccionari</string>
+    <string name="widget_settings_save">Desar</string>
+    
+    <string name="widget_error">Cap paraula trobada</string>
+    <string name="widget_error_io">Cap paraula trobada \n Problema de connexió</string>
+    <string name="widget_error_dict">Cap paraula trobada \n Problema amb el diccionari</string>
+    
+    <string name="speech_lang_notsupported">Llenguatge no suportat</string>
+    <string name="speech_initialized">Servei de lectura inicialitzat</string>
+    <string name="speech_starting">Iniciant servei de lectura</string>
+	<string name="speech_error">Error en el servei de lectura</string>
+</resources>

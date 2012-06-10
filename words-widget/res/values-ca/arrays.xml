@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dictionaries">
+        <item>Afrikaans-Alemany</item>
+        <item>Alemany-Holandès</item>
+        <item>Alemany-Anglès</item>
+        <item>Alemany-Francès</item>
+        <item>Alemany-Italià</item>
+        <item>Alemany-Portuguès</item>
+        <item>Anglès-Àrab</item>
+        <item>Anglès-Croat</item>
+        <item>Anglès-Txec</item>
+        <item>Anglès-Holandès</item>
+        <item>Anglès-Francès</item>
+        <item>Anglès-Alemany</item>
+        <item>Anglès-Hindi</item>
+        <item>Anglès-Hongarès</item>
+        <item>Anglès-Irlandès</item>
+        <item>Anglès-Italià</item>
+        <item>Anglès-Llatí</item>
+        <item>Anglès-Portuguès</item>
+        <item>Anglès-Romanès</item>
+        <item>Anglès-Rus</item>
+        <item>Anglès-Serbo Croat</item>
+        <item>Anglès-Espanyol</item>
+        <item>Anglès-Suahili</item>
+        <item>Anglès-Suec</item>
+        <item>Anglès-Turc</item>
+        <item>Anglès-Gal·lès</item>
+        <item>Croat-Anglès</item>
+        <item>Danès-Anglès</item>
+        <item>Eslovac-Anglès</item>
+        <item>Espanyol-Anglès</item>
+        <item>Francès-Holandès</item>
+        <item>Francès-Anglès</item>
+        <item>Francès-Alemany</item>
+        <item>Gaèlic escocès-Alemany</item>
+        <item>Gal·lès-Anglès</item>
+        <item>Holandès-Anglès</item>
+        <item>Holandès-Francès</item>
+        <item>Holandès-Alemany</item>
+        <item>Hongarès-Anglès</item>
+        <item>Irlandès-Anglès</item>
+        <item>Italià-Anglès</item>
+        <item>Italià-Alemany</item>
+        <item>Llatí-Anglès</item>
+        <item>Llatí-Alemany</item>
+        <item>Portuguès-Anglès</item>
+        <item>Portuguès-Alemany</item>
+        <item>Serbo Croat-Anglès</item>
+        <item>Suahili-Anglès</item>
+        <item>Suec-Anglès</item>
+        <item>Turc-Anglès</item>
+        <item>Turc-Alemany</item>
+        <item>Txec-Anglès</item>
+    </string-array>
+    
+	<string-array name="dictionaries_values">
+        <item>afr-deu</item>
+		<item>deu-nld</item>
+        <item>deu-eng</item>
+        <item>deu-fra</item>
+        <item>deu-ita</item>
+        <item>deu-por</item>
+		<item>eng-ara</item>
+        <item>eng-cro</item>
+        <item>eng-cze</item>
+        <item>eng-nld</item>
+        <item>eng-fra</item>
+        <item>eng-deu</item>
+        <item>eng-hin</item>
+        <item>eng-hun</item>
+        <item>eng-iri</item>
+        <item>eng-ita</item>
+        <item>eng-lat</item>
+        <item>eng-por</item>
+        <item>eng-rom</item>
+        <item>eng-rus</item>
+        <item>eng-scr</item>
+        <item>eng-spa</item>
+        <item>eng-swa</item>
+        <item>eng-swe</item>
+        <item>eng-tur</item>
+        <item>eng-wel</item>
+        <item>cro-eng</item>
+        <item>dan-eng</item>
+		<item>slo-eng</item>
+        <item>spa-eng</item>
+        <item>fra-nld</item>
+        <item>fra-eng</item>
+        <item>fra-deu</item>
+		<item>gla-deu</item>
+		<item>wel-eng</item>
+		<item>nld-eng</item>
+        <item>nld-fra</item>
+        <item>nld-deu</item>
+        <item>hun-eng</item>
+        <item>iri-eng</item>
+        <item>ita-eng</item>
+        <item>ita-deu</item>
+        <item>lat-eng</item>
+        <item>lat-deu</item>
+        <item>por-eng</item>
+        <item>por-deu</item>
+        <item>scr-eng</item>
+        <item>swa-eng</item>
+        <item>swe-eng</item>
+		<item>tur-eng</item>
+        <item>tur-deu</item>
+		<item>cze-eng</item>
+    </string-array>
+    
+    <string-array name="updateTimes">
+        <item>Cada 30 minuts</item>
+        <item>Cada hora</item>
+        <item>Cada 4 hores</item>
+        <item>Cada 12 hores</item>
+        <item>Una vegada al dia</item>
+    </string-array>
+    
+</resources>
