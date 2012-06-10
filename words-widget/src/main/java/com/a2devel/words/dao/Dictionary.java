@@ -114,6 +114,14 @@ public class Dictionary {
 			}else{
 				throw e;
 			}
+		} catch (IOException e){
+			if(currentAttempt < Dictionary.ATTEMPTS_NOT_MATCH){
+				dictClient.finalize();
+				dictClient.init();
+				return getRandomWord(++currentAttempt);
+			}else{
+				throw e;
+			}
 		}
 		
 		if(matches.containsKey(getDatabase())){
