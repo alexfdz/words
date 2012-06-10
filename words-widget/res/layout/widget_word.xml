@@ -43,6 +43,15 @@
 	        style="@style/button.update" />
         
         <ImageButton
+	        android:id="@+id/speechButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/widget_speech_description"
+	        android:layout_centerHorizontal="true"
+	        android:padding="10dp"
+	        style="@style/button.speech" />
+        
+        <ImageButton
 	        android:id="@+id/settingsButton"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"

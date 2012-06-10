@@ -14,7 +14,7 @@
            android:title="@string/widget_settings_update"
            android:summary="@string/widget_settings_update_description"
            android:key="@string/pref_updateTime_key"
-           android:defaultValue="1"
+           android:defaultValue="14400000"
            android:entries="@array/updateTimes"
            android:entryValues="@array/updateTimes_values" />  
     

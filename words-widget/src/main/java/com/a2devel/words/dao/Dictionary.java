@@ -51,6 +51,15 @@ public class Dictionary {
 		}
 		setDatabase(database);
 		Word word = getWord(0);
+		
+		if(word != null && database.contains("-")){
+			String[] languages = database.split("-");
+			if(languages.length == 2){
+				word.setWordLanguage(languages[0]);
+				word.setTranslationLanguage(languages[1]);
+			}
+		}
+		
 		return word;
 	}
 	

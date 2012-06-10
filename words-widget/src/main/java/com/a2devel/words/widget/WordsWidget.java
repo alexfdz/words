@@ -15,17 +15,14 @@ public class WordsWidget extends AppWidgetProvider {
 	
 	private static final String TAG = "WordsWidget";
 	public static String ACTION_WIDGET_REFRESH = "ActionReceiverRefresh";
-	public static String ACTION_WIDGET_ALARM_REFRESH = "ActionReceiverAlarmRefresh";
 	public static String URI_SCHEME = WordsWidget.class.getName();
-	
-	private Intent updateIntent;
 	
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
             int[] widgetIds) {
     	for (int widgetId : widgetIds) {
     		Log.d(TAG, "onUpdate appWidgetId:" + widgetId);
-    		Intent updateIntent = getUpdateIntent(context);
+    		Intent updateIntent = new Intent(context, UpdateService.class);
             addIntentData(updateIntent, widgetId);
 			context.startService(updateIntent);
 		}
@@ -38,25 +35,13 @@ public class WordsWidget extends AppWidgetProvider {
         if (intent.getAction().equals(ACTION_WIDGET_REFRESH)) {
         	int widgetId =intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 
 					AppWidgetManager.INVALID_APPWIDGET_ID);
-        	
-        	Intent updateIntent = getUpdateIntent(context);
+        	Intent updateIntent = new Intent(context, UpdateService.class);
             addIntentData(updateIntent, widgetId);
             context.startService(updateIntent);
-            
-        } else if (intent.getAction().equals(ACTION_WIDGET_ALARM_REFRESH)) {
-        	
-            
         }else {
             super.onReceive(context, intent);
         }
     }
-    
-    public Intent getUpdateIntent(Context context) {
-    	if(updateIntent == null){
-    		updateIntent = new Intent(context, UpdateService.class);
-    	}
-		return updateIntent;
-	}
     
     /**
      * @param intent
@@ -85,13 +70,13 @@ public class WordsWidget extends AppWidgetProvider {
 	 * @param appWidgetId
 	 */
 	protected void cancelAlarm(Context context, int widgetId) {
-		Intent intent = getUpdateIntent(context);
-		AlarmManager alarmManager = (AlarmManager) context
-				.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent pendingIntentAlarm = PendingIntent.getBroadcast(context,
-				0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		alarmManager.cancel(pendingIntentAlarm);
+		Intent active = new Intent(context, WordsWidget.class);
+        active.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
+        WordsWidget.addIntentData(active, widgetId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
+		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		alarmManager.cancel(pendingIntent);
 		Log.d(TAG, "Alarm canceled:" +widgetId);
 	}
-
+	
 }

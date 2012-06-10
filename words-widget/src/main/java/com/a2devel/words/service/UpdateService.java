@@ -77,11 +77,20 @@ public class UpdateService extends WordsService {
             view.setTextViewText(R.id.translation, word.getTranslation());
 
             Intent switchIntent = new Intent(context, SwitchVisibilityService.class);
+            switchIntent.putExtra(SpeechService.WORD_KEY, word);
             switchIntent.putExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, true);
             WordsWidget.addIntentData(switchIntent, widgetId);
             PendingIntent pendingIntent = PendingIntent.getService(context, 0, switchIntent,
-            	      PendingIntent.FLAG_UPDATE_CURRENT);
+            		PendingIntent.FLAG_UPDATE_CURRENT);
             view.setOnClickPendingIntent(R.id.widget, pendingIntent);
+            
+            Intent speechIntent = new Intent(context, SpeechService.class);
+            speechIntent.putExtra(SpeechService.WORD_KEY, word);
+            speechIntent.putExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, true);
+            WordsWidget.addIntentData(speechIntent, widgetId);
+            PendingIntent speechPendingIntent = PendingIntent.getService(context, 0, speechIntent,
+            		PendingIntent.FLAG_UPDATE_CURRENT);
+            view.setOnClickPendingIntent(R.id.speechButton, speechPendingIntent);
             
         } else {
         	if(errorMessage == null){
@@ -93,7 +102,6 @@ public class UpdateService extends WordsService {
         
         return view;
     }
-    
     
     /**
      * @return

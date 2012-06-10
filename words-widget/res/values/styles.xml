@@ -40,6 +40,11 @@
     	<item name="android:background">@null</item>
     </style>
     
+    <style name="button.speech">
+    	<item name="android:src">@drawable/button_speech_bg</item>
+    	<item name="android:background">@null</item>
+    </style>
+    
     <style name="button.config">
     	<item name="android:src">@drawable/button_config_bg</item>
     	<item name="android:background">@null</item>

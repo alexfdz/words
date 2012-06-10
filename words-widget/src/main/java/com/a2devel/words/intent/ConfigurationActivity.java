@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -22,11 +23,6 @@ public class ConfigurationActivity extends PreferenceActivity {
 	protected static final String TAG = "ConfigurationActivity";
     private static final String PREFS_NAME = WordsWidget.class.getSimpleName();
     private int widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    
-    
-    
-    
-    
 
     public ConfigurationActivity() {
         super();
@@ -65,12 +61,20 @@ public class ConfigurationActivity extends PreferenceActivity {
     	Intent active = new Intent(this, WordsWidget.class);
         active.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
         WordsWidget.addIntentData(active, widgetId);
-        PendingIntent actionPendingIntent = PendingIntent.getBroadcast(this, 0, active, 0);
-        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+(10*1000),
-    			(long)10000,  actionPendingIntent);
-    	Log.d(TAG, "Alarm refreshed:" +widgetId);
-        this.startService(active);
+        
+        SharedPreferences preferences = this.getSharedPreferences(ConfigurationActivity.getPreferencesName(widgetId), 
+        		Context.MODE_PRIVATE);
+        String interval = preferences.getString(this.getText(R.string.pref_updateTime_key).toString(), null);
+        
+        if(interval != null){
+        	long updateTime = Long.parseLong(interval);
+        	PendingIntent actionPendingIntent = PendingIntent.getBroadcast(this, 0, active, 0);
+            AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+            		updateTime,  actionPendingIntent);
+        	Log.d(TAG, "Alarm refreshed:" +widgetId);
+        }
+        startService(active);
         setResult(RESULT_OK, active);
         finish();
     }

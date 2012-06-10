@@ -40,22 +40,20 @@ public abstract class WordsService extends Service {
        
     	Log.d(TAG, "appWidgetId " + widgetId);
     	 
-        Intent active = new Intent(context, WordsWidget.class);
-        active.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
-        WordsWidget.addIntentData(active, widgetId);
-        PendingIntent actionPendingIntent = PendingIntent.getBroadcast(context, 0, active, 0);
-        view.setOnClickPendingIntent(R.id.updateButton, actionPendingIntent);
-        
+        Intent intent = new Intent(context, WordsWidget.class);
+        intent.setAction(WordsWidget.ACTION_WIDGET_REFRESH);
+        WordsWidget.addIntentData(intent, widgetId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
+      	      PendingIntent.FLAG_UPDATE_CURRENT);
+        view.setOnClickPendingIntent(R.id.updateButton, pendingIntent);
         Log.d(TAG, "updated updatebutton to  widgetId: " + widgetId);
         
-        Intent settingIntent = new Intent(context, ConfigurationActivity.class);
-		settingIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
-		WordsWidget.addIntentData(settingIntent, widgetId);
-		PendingIntent pendingIntentSettings = PendingIntent.getActivity(
-				context, 0, settingIntent, 0);
-
-		view.setOnClickPendingIntent(R.id.settingsButton, pendingIntentSettings);
-		
+        Intent configIntent = new Intent(context, ConfigurationActivity.class);
+        configIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
+		WordsWidget.addIntentData(configIntent, widgetId);
+		PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent,
+      	      PendingIntent.FLAG_UPDATE_CURRENT);
+		view.setOnClickPendingIntent(R.id.settingsButton, configPendingIntent);
 		Log.d(TAG, "updated settingsButton to  widgetId: " + widgetId);
 		
 		AppWidgetManager.getInstance(context).updateAppWidget(widgetId, view);
