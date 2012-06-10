@@ -46,11 +46,10 @@ public class SpeechService extends Service {
     	Log.d(TAG, "SpeechService onStart");
     	if(intent != null && ready){
     		Word word = null;
-    		boolean isWordVisible = intent.getBooleanExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, false);
     		if(intent.getSerializableExtra(SpeechService.WORD_KEY) instanceof Word){
     			word = (Word)intent.getSerializableExtra(SpeechService.WORD_KEY);
     		}
-    		this.speech(word, isWordVisible);
+    		this.speech(word);
     	}else{
     		Toast.makeText(this, this.getText(R.string.speech_starting),
 					Toast.LENGTH_SHORT).show();
@@ -58,13 +57,14 @@ public class SpeechService extends Service {
     }
     
     /**
+    /**
      * @param word
      * @param isWordVisible
      */
-    private void speech(Word word, boolean isWordVisible){
+    private void speech(Word word){
     	if(word != null){
-			String text = this.getTextToSpeech(word, isWordVisible);
-			String language = this.getLanguage(word, isWordVisible);
+			String text = this.getTextToSpeech(word);
+			String language = this.getLanguage(word);
 			
 			if(text != null && language != null){
 				Log.d(TAG, "Speech word: " + text + " lang: "+language);
@@ -92,10 +92,10 @@ public class SpeechService extends Service {
      * @param isWordVisible
      * @return
      */
-    private String getTextToSpeech(Word word, boolean isWordVisible){
+    private String getTextToSpeech(Word word){
     	String text = null;
     	if(word != null){
-    		if(isWordVisible){
+    		if(word.isWordVisible()){
     			text = word.getWord();
     		}else{
     			text = word.getTranslation();
@@ -109,10 +109,10 @@ public class SpeechService extends Service {
      * @param isWordVisible
      * @return
      */
-    private String getLanguage(Word word, boolean isWordVisible){
+    private String getLanguage(Word word){
     	String language = null;
     	if(word != null){
-    		if(isWordVisible){
+    		if(word.isWordVisible()){
     			language = word.getWordLanguage();
     		}else{
     			language = word.getTranslationLanguage();

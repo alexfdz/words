@@ -9,6 +9,7 @@ public class Word implements Serializable{
 	private String translation;
 	private String wordLanguage;
 	private String translationLanguage;
+	private Boolean isWordVisible;
 	
 	public String getWord() {
 		return word;
@@ -33,5 +34,11 @@ public class Word implements Serializable{
 	}
 	public void setTranslationLanguage(String translationLanguage) {
 		this.translationLanguage = translationLanguage;
+	}
+	public Boolean isWordVisible() {
+		return isWordVisible;
+	}
+	public void setWordVisible(Boolean isWordVisible) {
+		this.isWordVisible = isWordVisible;
 	}
 }

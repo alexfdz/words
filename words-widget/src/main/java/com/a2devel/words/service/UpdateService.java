@@ -32,15 +32,6 @@ public class UpdateService extends WordsService {
 	public void onCreate() {
 		super.onCreate();
 		wordsBuffer = new ArrayList<String>();
-		try {
-			long time = System.currentTimeMillis();
-			dictionary = new Dictionary();
-			Log.d(TAG, "Time to create Dictionary: "+ (System.currentTimeMillis() - time) + " ms");
-		} catch (DictException e) {
-			Log.e(TAG, e.getMessage(), e);
-		} catch (IOException e) {
-			Log.e(TAG, e.getMessage(), e);
-		}
 	}
 	
     /**
@@ -75,10 +66,10 @@ public class UpdateService extends WordsService {
         	Log.d(TAG, "Correct word " +word.getWord() + "::"+word.getTranslation());
             view.setTextViewText(R.id.word, word.getWord());
             view.setTextViewText(R.id.translation, word.getTranslation());
-
+            word.setWordVisible(true);
+            
             Intent switchIntent = new Intent(context, SwitchVisibilityService.class);
             switchIntent.putExtra(SpeechService.WORD_KEY, word);
-            switchIntent.putExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, true);
             WordsWidget.addIntentData(switchIntent, widgetId);
             PendingIntent pendingIntent = PendingIntent.getService(context, 0, switchIntent,
             		PendingIntent.FLAG_UPDATE_CURRENT);
@@ -86,11 +77,14 @@ public class UpdateService extends WordsService {
             
             Intent speechIntent = new Intent(context, SpeechService.class);
             speechIntent.putExtra(SpeechService.WORD_KEY, word);
-            speechIntent.putExtra(SwitchVisibilityService.WORD_VISIBLE_KEY, true);
             WordsWidget.addIntentData(speechIntent, widgetId);
             PendingIntent speechPendingIntent = PendingIntent.getService(context, 0, speechIntent,
             		PendingIntent.FLAG_UPDATE_CURRENT);
             view.setOnClickPendingIntent(R.id.speechButton, speechPendingIntent);
+            
+            Log.d(TAG, "getWord:" + word.getWord());
+			Log.d(TAG, "getTranslation:" + word.getTranslation());
+			Log.d(TAG, "isWordVisible:" + word.isWordVisible());
             
         } else {
         	if(errorMessage == null){
@@ -133,6 +127,15 @@ public class UpdateService extends WordsService {
      * @return
      */
     private Dictionary getDictionary(){
+    	if(dictionary == null){
+    		try {
+    			dictionary = new Dictionary();
+    		} catch (DictException e) {
+    			Log.e(TAG, e.getMessage(), e);
+    		} catch (IOException e) {
+    			Log.e(TAG, e.getMessage(), e);
+    		}
+    	}
     	return dictionary;
     }
 

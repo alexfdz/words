@@ -15,6 +15,7 @@ public class WordsWidget extends AppWidgetProvider {
 	
 	private static final String TAG = "WordsWidget";
 	public static String ACTION_WIDGET_REFRESH = "ActionReceiverRefresh";
+	public static String ACTION_WIDGET_SPEECH = "ActionReceiverSpeech";
 	public static String URI_SCHEME = WordsWidget.class.getName();
 	
     @Override

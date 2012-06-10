@@ -46,7 +46,6 @@ public abstract class WordsService extends Service {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
       	      PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.updateButton, pendingIntent);
-        Log.d(TAG, "updated updatebutton to  widgetId: " + widgetId);
         
         Intent configIntent = new Intent(context, ConfigurationActivity.class);
         configIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
@@ -54,7 +53,6 @@ public abstract class WordsService extends Service {
 		PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent,
       	      PendingIntent.FLAG_UPDATE_CURRENT);
 		view.setOnClickPendingIntent(R.id.settingsButton, configPendingIntent);
-		Log.d(TAG, "updated settingsButton to  widgetId: " + widgetId);
 		
 		AppWidgetManager.getInstance(context).updateAppWidget(widgetId, view);
 		

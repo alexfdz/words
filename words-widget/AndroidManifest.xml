@@ -23,8 +23,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />  
             </intent-filter>
         </activity>
-
-        <service android:name="com.a2devel.words.service.UpdateService" />
+        
+		<service android:name="com.a2devel.words.service.UpdateService" />
         <service android:name="com.a2devel.words.service.SwitchVisibilityService" />
         <service android:name="com.a2devel.words.service.SpeechService" />
     </application>

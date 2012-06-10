@@ -2,7 +2,6 @@
 <resources>
     <string-array name="dictionaries">
         <item>Afrikaans-German</item>
-        <item>Arabic-English</item>
         <item>Croatian-English</item>
         <item>Czech-English</item>
         <item>Danish-English</item>
@@ -37,7 +36,6 @@
         <item>German-French</item>
         <item>German-Italian</item>
         <item>German-Portuguese</item>
-        <item>Hindi-English</item>
         <item>Hungarian-English</item>
         <item>Irish-English</item>
         <item>Italian-English</item>
@@ -59,7 +57,6 @@
     </string-array>
      <string-array name="dictionaries_values">
         <item>afr-deu</item>
-        <item>ara-eng</item>
         <item>cro-eng</item>
         <item>cze-eng</item>
         <item>dan-eng</item>
@@ -94,7 +91,6 @@
         <item>deu-fra</item>
         <item>deu-ita</item>
         <item>deu-por</item>
-        <item>hin-eng</item>
         <item>hun-eng</item>
         <item>iri-eng</item>
         <item>ita-eng</item>
