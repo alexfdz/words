@@ -102,8 +102,7 @@ public class UpdateService extends WordsService {
      */
     private Word getWord(Context context, int widgetId) throws DictException, IOException{
     	SharedPreferences preferences = context.getSharedPreferences(ConfigurationActivity.getPreferencesName(widgetId), Context.MODE_PRIVATE);
-    	return getWord(preferences.getString(context.getText(R.string.pref_dictionary_key).toString(),
-    			Dictionary.DEFAULT_DICTIONARY));
+    	return getWord(preferences.getString(context.getText(R.string.pref_dictionary_key).toString(), null));
     }
     
     /**
@@ -113,10 +112,9 @@ public class UpdateService extends WordsService {
      * @throws IOException
      */
     private Word getWord(String database) throws DictException, IOException{
-    	Log.d(TAG, "getWord database: " + database);
     	Dictionary dictionary =  getDictionary();
     	Word word = null;
-    	if(dictionary != null){
+    	if(dictionary != null && database != null){
     		word = getDictionary().getWord(database);
         	if(word != null){
         		if(wordsBuffer.contains(word.getWord())){
@@ -155,7 +153,7 @@ public class UpdateService extends WordsService {
 	@Override
 	public void onDestroy() {
 		try {
-			getDictionary().finalize();
+			getDictionary().stop();
 		} catch (DictException e) {
 			Log.e(TAG, e.getMessage(), e);
 		} catch (IOException e) {

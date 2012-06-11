@@ -43,7 +43,7 @@ public class DictionaryTest {
 
 	@After
 	public void destroyDictClient() throws DictException, IOException{
-		dictionary.finalize();
+		dictionary.stop();
 	}
 
 }

@@ -15,13 +15,26 @@ import android.view.View;
 import com.a2devel.words.R;
 import com.a2devel.words.widget.WordsWidget;
 
+/**
+ * Widget {@link PreferenceActivity} to manage the behaviour properties like dictionary
+ * to use and automatic update interval.
+ * 
+ * Starts the widget update action on close/back/save actions.
+ *  
+ * @author fernanda
+ *
+ */
 public class ConfigurationActivity extends PreferenceActivity {
     
-	public static final String DICTIONARY_KEY = "dictionaryList";
-	public static final String UPDATETIME_KEY = "updateList";
-	
 	protected static final String TAG = "ConfigurationActivity";
-    private static final String PREFS_NAME = WordsWidget.class.getSimpleName();
+    
+	/**
+	 * Prefix for preferences name
+	 */
+	private static final String PREFS_NAME = WordsWidget.class.getSimpleName();
+    /**
+     * Application widget id
+     */
     private int widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     public ConfigurationActivity() {

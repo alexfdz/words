@@ -16,19 +16,32 @@ import mt.rcasha.dict.client.StatusException;
 import com.a2devel.words.to.Word;
 
 /**
+ * {@link DictClient} utility wrapper to manage attempts, resolve random requests and exceptions.
  * @author fernanda
- *
+ * @see DictClient
  */
 public class Dictionary {
 	
-	public static final String DEFAULT_DICTIONARY = "eng-spa";
-	
+	/**
+	 * Maximum attempts to get a random word
+	 */
 	private static final int ATTEMPTS_NOT_MATCH = 3;
 	private static Random random = new Random();
-	
+	/**
+	 * Dictionary database
+	 */
 	private String database;
+	/**
+	 * Match strategy to resolve dictionary requests 
+	 */
 	private String strategy;
+	/**
+	 * Dictionary access 
+	 */
 	private DictClient dictClient;
+	/**
+	 * Project properties file access
+	 */
 	private Properties properties;
 
 	public Dictionary() throws IOException, DictException{
@@ -39,7 +52,9 @@ public class Dictionary {
 	}
 	
 	/**
-	 * @return
+	 * Get a random word/translation for a given database and wrapped in a {@link Word} entity.
+	 * @return {@link Word} entity or null if no word was found after {@link Dictionary#ATTEMPTS_NOT_MATCH} attempts
+	 * or the database is incorrect
 	 * @throws DictException
 	 * @throws IOException
 	 */
@@ -64,8 +79,9 @@ public class Dictionary {
 	}
 	
 	/**
-	 * @param currentAttempt
-	 * @return
+	 * Get a random word/translation wrapped in a {@link Word} entity. 
+	 * @param currentAttempt Current attempt to control the {@link Dictionary#ATTEMPTS_NOT_MATCH} attempts allowed.
+	 * @return {@link Word} entity or null if no word was found after {@link Dictionary#ATTEMPTS_NOT_MATCH} attempts
 	 * @throws DictException
 	 * @throws IOException
 	 */
@@ -88,7 +104,8 @@ public class Dictionary {
 	}
 
 	/**
-	 * @return
+	 * Get a random word from the internal {@link DictClient} and database.
+	 * @return The word or null if no word was found after {@link Dictionary#ATTEMPTS_NOT_MATCH} attempts
 	 * @throws DictException
 	 * @throws IOException
 	 */
@@ -97,8 +114,9 @@ public class Dictionary {
 	}
 	
 	/**
-	 * @param currentAttempt
-	 * @return
+	 * Get a random word from the internal {@link DictClient} and database.
+	 * @param currentAttempt Current attempt to control the {@link Dictionary#ATTEMPTS_NOT_MATCH} attempts allowed.
+	 * @return The word or null if no word was found after {@link Dictionary#ATTEMPTS_NOT_MATCH} attempts
 	 * @throws DictException
 	 * @throws IOException
 	 */
@@ -133,8 +151,9 @@ public class Dictionary {
 	}
 	
 	/**
-	 * @param word
-	 * @return
+	 * Resolve the translation of the given word from the internal {@link DictClient} and database.
+	 * @param word The word to translate
+	 * @return The translation or null if no translation is found
 	 * @throws DictException
 	 * @throws IOException
 	 */
@@ -169,7 +188,12 @@ public class Dictionary {
 		return translation;
 	}
 	
-	public void finalize() throws DictException, IOException{
+	/**
+	 * Stop the {@link DictClient} connection
+	 * @throws DictException
+	 * @throws IOException
+	 */
+	public void stop() throws DictException, IOException{
 		this.dictClient.finalize();
 	}
 	
