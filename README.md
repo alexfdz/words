@@ -10,3 +10,9 @@ Android widget to show random words, their translations and pronunciation (on us
 * Android Maven integration with android-maven-plugin
   * http://code.google.com/p/maven-android-plugin
 * TextToSpeech integration
+
+### Build
+
+* Go to words-widget/dist folder and execute the maven-install.txt defined commands to install JavaDict artifact in your local repository.
+
+* Execute the maven install phase words-widget project
