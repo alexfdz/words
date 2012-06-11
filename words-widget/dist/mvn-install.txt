@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=javadict-client-1.0.jar -DpomFile=javadict-client-1.0.pom -Djavadoc=javadict-client-1.0-javadoc.jar -Dsources=javadict-client-1.0-sources.jar
