@@ -21,12 +21,12 @@ public class WordsWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
             int[] widgetIds) {
-    	for (int widgetId : widgetIds) {
-    		Log.d(TAG, "onUpdate appWidgetId:" + widgetId);
-    		Intent updateIntent = new Intent(context, UpdateService.class);
-            addIntentData(updateIntent, widgetId);
-			context.startService(updateIntent);
-		}
+//    	for (int widgetId : widgetIds) {
+//    		Log.d(TAG, "onUpdate appWidgetId:" + widgetId);
+//    		Intent updateIntent = new Intent(context, UpdateService.class);
+//            addIntentData(updateIntent, widgetId);
+//			context.startService(updateIntent);
+//		}
     }
     
     @Override

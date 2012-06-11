@@ -19,7 +19,7 @@ public class SwitchVisibilityService extends WordsService {
 	
     @Override
 	public void onStart(Intent intent, int startId) {
-		if(intent.getSerializableExtra(SpeechService.WORD_KEY) instanceof Word){
+		if(intent != null && intent.getSerializableExtra(SpeechService.WORD_KEY) instanceof Word){
 			word = (Word)intent.getSerializableExtra(SpeechService.WORD_KEY);
 		}else{
 			word = null;

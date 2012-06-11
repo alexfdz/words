@@ -106,34 +106,47 @@ public class UpdateService extends WordsService {
     			Dictionary.DEFAULT_DICTIONARY));
     }
     
+    /**
+     * @param database
+     * @return
+     * @throws DictException
+     * @throws IOException
+     */
     private Word getWord(String database) throws DictException, IOException{
     	Log.d(TAG, "getWord database: " + database);
-    	Word word = getDictionary().getWord(database);
-    	if(word != null){
-    		if(wordsBuffer.contains(word.getWord())){
-        		word = getWord(database);
-        	}else{
-        		wordsBuffer.add(word.getWord());
-        		if(wordsBuffer.size() > WORDS_BUFFER_SIZE){
-        			wordsBuffer.remove(0);
-        		}
+    	Dictionary dictionary =  getDictionary();
+    	Word word = null;
+    	if(dictionary != null){
+    		word = getDictionary().getWord(database);
+        	if(word != null){
+        		if(wordsBuffer.contains(word.getWord())){
+            		word = getWord(database);
+            	}else{
+            		wordsBuffer.add(word.getWord());
+            		if(wordsBuffer.size() > WORDS_BUFFER_SIZE){
+            			wordsBuffer.remove(0);
+            		}
+            	}
         	}
     	}
-    	
     	return word;
     }
     
     /**
      * @return
+     * @throws DictException 
+     * @throws IOException 
      */
-    private Dictionary getDictionary(){
+    private Dictionary getDictionary() throws DictException, IOException{
     	if(dictionary == null){
     		try {
     			dictionary = new Dictionary();
     		} catch (DictException e) {
     			Log.e(TAG, e.getMessage(), e);
+    			throw e;
     		} catch (IOException e) {
     			Log.e(TAG, e.getMessage(), e);
+    			throw e;
     		}
     	}
     	return dictionary;
