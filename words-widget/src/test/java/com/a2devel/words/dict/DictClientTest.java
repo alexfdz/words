@@ -1,9 +1,6 @@
 package com.a2devel.words.dict;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -46,35 +43,8 @@ public class DictClientTest {
 		final Map<String,String> databases = client.getDatabases();
 		Assert.assertNotNull(databases);
 		Assert.assertFalse(databases.isEmpty());
-		
-		List<String> keys = new ArrayList<String>();
-		
-		
 		for (String key : databases.keySet()) {
-			if(key.contains("-")){
-				keys.add(key);
-			}else{
-				logger.info("NOOO: " + key);
-			}
-		}
-		
-		Collections.sort(keys,new Comparator<String>() {
-
-			@Override
-			public int compare(String lhs, String rhs) {
-				String databaseLhs = databases.get(lhs);
-				String databaseRhs = databases.get(rhs);
-				return databaseLhs.replace("-", "").compareToIgnoreCase(databaseRhs.replace("-", ""));
-			}
-		});
-		
-		System.out.println("KEYS::::::::::::::::");
-		for (String key : keys) {
-			System.out.println("<item>"+key+"</item>");
-		}
-		System.out.println("VALUES::::::::::::::::");
-		for (String key : keys) {
-			System.out.println("<item>"+databases.get(key)+"</item>");
+			logger.info(key + ": " + databases.get(key));
 		}
 	}
 	

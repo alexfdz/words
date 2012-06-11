@@ -14,7 +14,7 @@
     <string name="widget_settings_save">Desar</string>
     
     <string name="widget_error">Ninguna palabra encontrada</string>
-    <string name="widget_error_io">CNinguna palabra encontrada \n Problema de connexión</string>
+    <string name="widget_error_io">Ninguna palabra encontrada \n Problema de connexión</string>
     <string name="widget_error_dict">Ninguna palabra encontrada \n Problema con el diccionario</string>
     
     <string name="speech_lang_notsupported">Lenguaje no sportado</string>

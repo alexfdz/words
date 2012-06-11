@@ -11,18 +11,19 @@ import android.widget.Toast;
 
 import com.a2devel.words.R;
 import com.a2devel.words.to.Word;
+import com.a2devel.words.widget.WordsWidget;
 
 /**
- * TODO: Pasarlo a Activity
+ * TexToSpeech service integration to reproduce the word/translation
  * @author alex
- *
  */
 public class SpeechService extends Service {
 
 	private static final String TAG = "SpeechService";
-	public static final String WORD_KEY = "com.a2devel.words.word";
-	
 	private TextToSpeech speech;
+	/**
+	 * Is the service ready indicator 
+	 */
 	private boolean ready = false;
 	
 	@Override
@@ -46,8 +47,8 @@ public class SpeechService extends Service {
     	Log.d(TAG, "SpeechService onStart");
     	if(intent != null && ready){
     		Word word = null;
-    		if(intent.getSerializableExtra(SpeechService.WORD_KEY) instanceof Word){
-    			word = (Word)intent.getSerializableExtra(SpeechService.WORD_KEY);
+    		if(intent.getSerializableExtra(WordsWidget.WORD_DATA_KEY) instanceof Word){
+    			word = (Word)intent.getSerializableExtra(WordsWidget.WORD_DATA_KEY);
     		}
     		this.speech(word);
     	}else{
@@ -57,7 +58,8 @@ public class SpeechService extends Service {
     }
     
     /**
-    /**
+     * Execute the speech integration for the given {@link Word} entity.
+     * Resolves if the text to speech is the word or its translation.
      * @param word
      * @param isWordVisible
      */
@@ -88,6 +90,8 @@ public class SpeechService extends Service {
     
     
     /**
+     * For a given {@link Word} entity resolves the text to speech
+     * depending on the visibility of the word.
      * @param word
      * @param isWordVisible
      * @return
@@ -105,6 +109,9 @@ public class SpeechService extends Service {
     }
     
     /**
+     * For a given {@link Word} entity resolves the language
+     * of the text to speech depending on the visibility of the word.
+     * 
      * @param word
      * @param isWordVisible
      * @return

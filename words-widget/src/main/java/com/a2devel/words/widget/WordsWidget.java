@@ -11,24 +11,18 @@ import android.util.Log;
 
 import com.a2devel.words.service.UpdateService;
 
+/**
+ * Widget provider to manage the recived actions
+ * 
+ * @author alex
+ */
 public class WordsWidget extends AppWidgetProvider {
 	
 	private static final String TAG = "WordsWidget";
 	public static String ACTION_WIDGET_REFRESH = "ActionReceiverRefresh";
-	public static String ACTION_WIDGET_SPEECH = "ActionReceiverSpeech";
 	public static String URI_SCHEME = WordsWidget.class.getName();
+	public static final String WORD_DATA_KEY = "com.a2devel.words.word";
 	
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-            int[] widgetIds) {
-//    	for (int widgetId : widgetIds) {
-//    		Log.d(TAG, "onUpdate appWidgetId:" + widgetId);
-//    		Intent updateIntent = new Intent(context, UpdateService.class);
-//            addIntentData(updateIntent, widgetId);
-//			context.startService(updateIntent);
-//		}
-    }
-    
     @Override
     public void onReceive(Context context, Intent intent) {
     	Log.d(TAG, "onReceive action: " +intent.getAction() + " widgetId: " +intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 
@@ -45,6 +39,8 @@ public class WordsWidget extends AppWidgetProvider {
     }
     
     /**
+     * Utility to add data to the given {@link Intent} entity
+     * to identify the widget.
      * @param intent
      * @param appWidgetId
      */
@@ -67,6 +63,7 @@ public class WordsWidget extends AppWidgetProvider {
 	}
 
 	/**
+	 * Cancel the alarm manager intents for a given widget
 	 * @param context
 	 * @param appWidgetId
 	 */

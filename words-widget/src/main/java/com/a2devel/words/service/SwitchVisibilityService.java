@@ -1,6 +1,5 @@
 package com.a2devel.words.service;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,6 +10,11 @@ import com.a2devel.words.R;
 import com.a2devel.words.to.Word;
 import com.a2devel.words.widget.WordsWidget;
 
+/**
+ * Service to manage the visibility of the word and its translation 
+ * @author alex
+ * @see WordsService
+ */
 public class SwitchVisibilityService extends WordsService {
 	
 	private static final String TAG = "SwitchVisibilityService";
@@ -19,8 +23,8 @@ public class SwitchVisibilityService extends WordsService {
 	
     @Override
 	public void onStart(Intent intent, int startId) {
-		if(intent != null && intent.getSerializableExtra(SpeechService.WORD_KEY) instanceof Word){
-			word = (Word)intent.getSerializableExtra(SpeechService.WORD_KEY);
+		if(intent != null && intent.getSerializableExtra(WordsWidget.WORD_DATA_KEY) instanceof Word){
+			word = (Word)intent.getSerializableExtra(WordsWidget.WORD_DATA_KEY);
 		}else{
 			word = null;
 		}
@@ -28,6 +32,9 @@ public class SwitchVisibilityService extends WordsService {
 	}
 
     /**
+     * Updates the visibility of the view depending on if the word is visible or 
+     * hidden.
+     * 
      * @param context
      * @return
      */
@@ -43,27 +50,7 @@ public class SwitchVisibilityService extends WordsService {
 				view.setViewVisibility(R.id.translation, View.INVISIBLE);
 			}
 			word.setWordVisible(!word.isWordVisible());
-
-			Intent switchIntent = new Intent(context,
-					SwitchVisibilityService.class);
-			switchIntent.putExtra(SpeechService.WORD_KEY, word);
-			WordsWidget.addIntentData(switchIntent, widgetId);
-			PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-					switchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			view.setOnClickPendingIntent(R.id.widget, pendingIntent);
-
-			Intent speechIntent = new Intent(context, SpeechService.class);
-			speechIntent.putExtra(SpeechService.WORD_KEY, word);
-			WordsWidget.addIntentData(speechIntent, widgetId);
-			PendingIntent speechPendingIntent = PendingIntent
-					.getService(context, 0, speechIntent,
-							PendingIntent.FLAG_UPDATE_CURRENT);
-			view.setOnClickPendingIntent(R.id.speechButton, speechPendingIntent);
-			
-			Log.d(TAG, "getWord:" + word.getWord());
-			Log.d(TAG, "getTranslation:" + word.getTranslation());
-			Log.d(TAG, "isWordVisible:" + word.isWordVisible());
-
+			this.updateWordPendingIntents(context, view, word, widgetId);
 		} else {
             view.setTextViewText(R.id.word, context.getText(R.string.widget_error));
             view.setTextViewText(R.id.translation, "");

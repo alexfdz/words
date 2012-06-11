@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mt.rcasha.dict.client.DictException;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
@@ -18,13 +16,23 @@ import com.a2devel.words.R;
 import com.a2devel.words.dao.Dictionary;
 import com.a2devel.words.intent.ConfigurationActivity;
 import com.a2devel.words.to.Word;
-import com.a2devel.words.widget.WordsWidget;
 
+/**
+ * Service to update a new random {@link Word} entity in the widget.
+ * Manages the {@link Dictionary} access object and handles its exceptions.
+ * 
+ * @author alex
+ */
 public class UpdateService extends WordsService {
 
 	private static final String TAG = "UpdateService";
+	/**
+	 * Max buffer size to control repeated words 
+	 */
 	private static final int WORDS_BUFFER_SIZE = 50;
-	
+	/**
+	 * Buffer to control repeated words 
+	 */
 	private List<String> wordsBuffer;
 	private Dictionary dictionary;
 	
@@ -34,10 +42,7 @@ public class UpdateService extends WordsService {
 		wordsBuffer = new ArrayList<String>();
 	}
 	
-    /**
-     * @param context
-     * @return
-     */
+    @Override
     public RemoteViews updateView(Context context, int widgetId) {
     	Word word = null;   
     	CharSequence errorMessage = null;
@@ -67,25 +72,7 @@ public class UpdateService extends WordsService {
             view.setTextViewText(R.id.word, word.getWord());
             view.setTextViewText(R.id.translation, word.getTranslation());
             word.setWordVisible(true);
-            
-            Intent switchIntent = new Intent(context, SwitchVisibilityService.class);
-            switchIntent.putExtra(SpeechService.WORD_KEY, word);
-            WordsWidget.addIntentData(switchIntent, widgetId);
-            PendingIntent pendingIntent = PendingIntent.getService(context, 0, switchIntent,
-            		PendingIntent.FLAG_UPDATE_CURRENT);
-            view.setOnClickPendingIntent(R.id.widget, pendingIntent);
-            
-            Intent speechIntent = new Intent(context, SpeechService.class);
-            speechIntent.putExtra(SpeechService.WORD_KEY, word);
-            WordsWidget.addIntentData(speechIntent, widgetId);
-            PendingIntent speechPendingIntent = PendingIntent.getService(context, 0, speechIntent,
-            		PendingIntent.FLAG_UPDATE_CURRENT);
-            view.setOnClickPendingIntent(R.id.speechButton, speechPendingIntent);
-            
-            Log.d(TAG, "getWord:" + word.getWord());
-			Log.d(TAG, "getTranslation:" + word.getTranslation());
-			Log.d(TAG, "isWordVisible:" + word.isWordVisible());
-            
+            this.updateWordPendingIntents(context, view, word, widgetId);
         } else {
         	if(errorMessage == null){
         		errorMessage = context.getText(R.string.widget_error);
@@ -98,6 +85,7 @@ public class UpdateService extends WordsService {
     }
     
     /**
+     * For a given widget, gets the next random {@link Word} entity
      * @return
      */
     private Word getWord(Context context, int widgetId) throws DictException, IOException{
@@ -106,6 +94,7 @@ public class UpdateService extends WordsService {
     }
     
     /**
+     * For a given database id gets the next random {@link Word} entity
      * @param database
      * @return
      * @throws DictException
@@ -131,6 +120,8 @@ public class UpdateService extends WordsService {
     }
     
     /**
+     * Get the {@link Dictionary} entity. Creates a new one if 
+     * doesn't exist
      * @return
      * @throws DictException 
      * @throws IOException 

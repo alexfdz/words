@@ -2,6 +2,12 @@ package com.a2devel.words.to;
 
 import java.io.Serializable;
 
+/**
+ * Value object to represent the information associated to a 
+ * word and its translation
+ * 
+ * @author alex
+ */
 public class Word implements Serializable{
 
 	private static final long serialVersionUID = 1L;
