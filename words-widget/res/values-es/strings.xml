@@ -11,7 +11,7 @@
     <string name="widget_settings_update_description">Actualitzación automática</string>
     <string name="widget_settings_dictionary">Diccionario</string>
     <string name="widget_settings_dictionary_description">Selecciona un diccionario</string>
-    <string name="widget_settings_save">Desar</string>
+    <string name="widget_settings_save">Guardar</string>
     
     <string name="widget_error">Ninguna palabra encontrada</string>
     <string name="widget_error_io">Ninguna palabra encontrada \n Problema de connexión</string>

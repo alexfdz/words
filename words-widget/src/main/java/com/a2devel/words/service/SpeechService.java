@@ -27,25 +27,9 @@ public class SpeechService extends Service {
 	private boolean ready = false;
 	
 	@Override
-	public void onCreate() {
-		Log.d(TAG, "SpeechService onCreate");
-		super.onCreate();
-		ready = false;
-		speech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-			@Override
-			public void onInit(int status) {
-				ready = true;
-				Log.d(TAG, "TextToSpeech init");
-				Toast.makeText(SpeechService.this, SpeechService.this.getText(R.string.speech_initialized),
-						Toast.LENGTH_SHORT).show();
-			}
-		});
-	}
-	
-    @Override
     public void onStart(Intent intent, int startId) {
     	Log.d(TAG, "SpeechService onStart");
-    	if(intent != null && ready){
+    	if(intent != null && isReady()){
     		Word word = null;
     		if(intent.getSerializableExtra(WordsWidget.WORD_DATA_KEY) instanceof Word){
     			word = (Word)intent.getSerializableExtra(WordsWidget.WORD_DATA_KEY);
@@ -56,7 +40,41 @@ public class SpeechService extends Service {
 					Toast.LENGTH_SHORT).show();
     	}
     }
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Service#onDestroy()
+	 */
+	@Override
+	public void onDestroy() {
+		if(speech != null){
+			speech.stop();
+			ready = false;
+		}
+		super.onDestroy();
+	}
     
+	/**
+	 * Checks if the textToSpeach service is ready, initialize it otherwise
+	 * @return the ready
+	 */
+	public boolean isReady() {
+		if(speech == null){
+    		ready = false;
+    		speech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+    			@Override
+    			public void onInit(int status) {
+    				ready = true;
+    				Log.d(TAG, "TextToSpeech init");
+    				Toast.makeText(SpeechService.this, SpeechService.this.getText(R.string.speech_initialized),
+    						Toast.LENGTH_SHORT).show();
+    			}
+    		});
+    	}
+		return ready;
+	}
+	
     /**
      * Execute the speech integration for the given {@link Word} entity.
      * Resolves if the text to speech is the word or its translation.
