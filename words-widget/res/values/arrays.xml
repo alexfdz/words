@@ -111,6 +111,7 @@
     </string-array>
     
     <string-array name="updateTimes">
+        <item>Every 5 minutes</item>
         <item>Every 30 minutes</item>
         <item>Every hour</item>
         <item>Every 4 hours</item>
@@ -119,6 +120,7 @@
     </string-array>
     
     <string-array name="updateTimes_values">
+        <item>300000</item>
         <item>1800000</item>
         <item>3600000</item>
         <item>14400000</item>

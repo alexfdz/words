@@ -39,7 +39,7 @@
 	        android:layout_height="wrap_content"
 	        android:contentDescription="@string/widget_update_description"
 	        android:layout_alignParentLeft="true"
-	        android:padding="5dp"
+	        android:padding="10dp"
 	        style="@style/button.update" />
         
         <ImageButton
@@ -48,7 +48,7 @@
 	        android:layout_height="wrap_content"
 	        android:contentDescription="@string/widget_speech_description"
 	        android:layout_centerHorizontal="true"
-	        android:padding="5dp"
+	        android:padding="10dp"
 	        style="@style/button.speech" />
         
         <ImageButton
@@ -56,7 +56,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:contentDescription="@string/widget_settings_description"
-	        android:padding="5dp"
+	        android:padding="10dp"
 	        android:layout_alignParentRight="true"
 	        style="@style/button.config" />
         

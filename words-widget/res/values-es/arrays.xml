@@ -111,6 +111,7 @@
         <item>tur-deu</item>
     </string-array>
     <string-array name="updateTimes">
+        <item>Cada 5 minutos</item>
         <item>Cada 30 minutos</item>
         <item>Cada hora</item>
         <item>Cada 4 horas</item>
