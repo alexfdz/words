@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.a2devel.words</groupId>
 	<artifactId>words-widget</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>apk</packaging>
 	<name>Words</name>
 
