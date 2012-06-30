@@ -132,16 +132,15 @@ public class Dictionary {
 			}else{
 				throw e;
 			}
-		} catch (IOException e){
+		} catch (Exception e){
 			if(currentAttempt < Dictionary.ATTEMPTS_NOT_MATCH){
 				dictClient.finalize();
 				dictClient.init();
 				return getRandomWord(++currentAttempt);
 			}else{
-				throw e;
+				throw new IOException(e.getMessage());
 			}
 		}
-		
 		if(matches.containsKey(getDatabase())){
 			List<String> results = matches.get(getDatabase());
 			int item = random.nextInt(results.size());

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.a2devel.words</groupId>
 	<artifactId>words-widget</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2</version>
 	<packaging>apk</packaging>
 	<name>Words</name>
 
@@ -178,6 +178,10 @@
 									<storepass>${android.storepass}</storepass>
 									<keypass>${android.keypass}</keypass>
 									<alias>${android.alias}</alias>
+									<arguments>
+                                      <argument>-sigalg</argument><argument>MD5withRSA</argument>
+                                      <argument>-digestalg</argument><argument>SHA1</argument>
+                                    </arguments>
 								</configuration>
 							</execution>
 						</executions>
@@ -186,26 +190,19 @@
 						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 						<artifactId>android-maven-plugin</artifactId>
 						<inherited>true</inherited>
-						<configuration>
-							<sign>
-								<debug>false</debug>
-							</sign>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-						<artifactId>android-maven-plugin</artifactId>
-						<version>3.2.0</version>
 						<executions>
 						    <execution>
 						        <id>alignApk</id>
-							    <phase>install</phase>
+							    <phase>package</phase>
 							    <goals>
 							      <goal>zipalign</goal>
 							    </goals>
 						    </execution>
 						</executions>
 						<configuration>
+							<sign>
+								<debug>false</debug>
+							</sign>
 							<zipalign>
 							  <verbose>true</verbose>
 							  <skip>false</skip>
